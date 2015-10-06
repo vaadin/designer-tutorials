@@ -16,10 +16,10 @@ public class MainLayout extends MainLayoutDesign {
 
     public MainLayout() {
         navigator = new Navigator(UI.getCurrent(), scroll_panel);
-        navigator.addView("", StatsView.class);
-        addNavigatorView(StatsView.VIEW_NAME, StatsView.class, menuButton1);
-        addNavigatorView(PluginsView.VIEW_NAME, PluginsView.class, menuButton2);
-        addNavigatorView(PermissionsView.VIEW_NAME, PermissionsView.class,
+        navigator.addView("", DashboardView.class);
+        addNavigatorView(DashboardView.VIEW_NAME, DashboardView.class, menuButton1);
+        addNavigatorView(OrderView.VIEW_NAME, OrderView.class, menuButton2);
+        addNavigatorView(AboutView.VIEW_NAME, AboutView.class,
                 menuButton3);
         navigator.addViewChangeListener(viewChangeListener);
         UI.getCurrent().setNavigator(navigator);
