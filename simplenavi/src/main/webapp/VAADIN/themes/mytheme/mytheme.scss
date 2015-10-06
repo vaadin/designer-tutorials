@@ -1,0 +1,87 @@
+// Global variable overrides. Must be declared before importing Valo.
+
+// Defines the plaintext font size, weight and family. Font size affects general component sizing.
+//$v-font-size: 16px;
+//$v-font-weight: 300;
+//$v-font-family: "Open Sans", sans-serif;
+
+// Defines the border used by all components.
+//$v-border: 1px solid (v-shade 0.7);
+//$v-border-radius: 4px;
+
+// Affects the color of some component elements, e.g Button, Panel title, etc
+//$v-background-color: hsl(210, 0%, 98%);
+// Affects the color of content areas, e.g  Panel and Window content, TextField input etc
+//$v-app-background-color: $v-background-color;
+
+// Affects the visual appearance of all components
+//$v-gradient: v-linear 8%;
+//$v-bevel-depth: 30%;
+//$v-shadow-opacity: 5%;
+
+// Defines colors for indicating status (focus, success, failure)
+//$v-focus-color: valo-focus-color(); // Calculates a suitable color automatically
+//$v-friendly-color: #2c9720;
+//$v-error-indicator-color: #ed473b;
+
+// For more information, see: https://vaadin.com/book/-/page/themes.valo.html
+// Example variants can be copy/pasted from https://vaadin.com/wiki/-/wiki/Main/Valo+Examples
+$v-app-loading-text: "Loading navigation example...";
+$v-background-color: #fafafa;
+$v-app-background-color: #fff;
+$v-panel-background-color: #fff;
+$v-font-family: "Source Sans Pro";
+$v-font-size: 20px;
+$v-font-color: #37404E;
+$v-font-weight: 400;
+
+@import "../valo/valo.scss";
+
+@mixin mytheme {
+  @include valo;
+  
+  $menu-bg: #0072C6;
+  $menu-item-color: valo-font-color($menu-bg, 0.8);
+  
+  .menu-layout {
+  		background-color: $menu-bg; 
+  }
+  .menu-item {
+  	position: relative;
+  	padding: 0 40px 0 20px;
+  	text-align: left;
+  	height: 50px;
+  	border: none;
+  	background-color: $menu-bg;
+  	color: $menu-item-color;
+  	outline: none;
+  	
+  	.v-nativebutton-caption {
+  		position: absolute;
+  		bottom: 10px;
+  		left: 2.5em;
+  	}
+  	
+  	.v-icon {
+  		font-size: 30px;
+  	}
+  	
+  	&:active span {
+  		@include transition(color 0.2s linear);
+  		color: darken($menu-item-color, 30%);
+  	}
+  	
+  	&:active .v-icon, &:focus .v-icon {
+  		position: relative;
+  		top: 0;
+  		left: 0;
+  	}
+  	
+  	&:hover {
+  		color: tint($menu-item-color, 50%);
+  		cursor: pointer;
+  	}
+  }
+  
+
+}
