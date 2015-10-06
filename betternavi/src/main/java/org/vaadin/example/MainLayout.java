@@ -15,7 +15,7 @@ public class MainLayout extends MainLayoutDesign {
     private Navigator navigator;
 
     public MainLayout() {
-        navigator = new Navigator(UI.getCurrent(), contentPanel);
+        navigator = new Navigator(UI.getCurrent(), scroll_panel);
         navigator.addView("", StatsView.class);
         addNavigatorView(StatsView.VIEW_NAME, StatsView.class, menuButton1);
         addNavigatorView(PluginsView.VIEW_NAME, PluginsView.class, menuButton2);
@@ -56,7 +56,7 @@ public class MainLayout extends MainLayoutDesign {
         @Override
         public void afterViewChange(ViewChangeEvent event) {
 
-            Iterator<Component> it = menuLayout.iterator();
+            Iterator<Component> it = side_bar.iterator();
             while (it.hasNext()) {
                 adjustStyleByData(it.next(),
                         event.getNewView().getClass().getName());

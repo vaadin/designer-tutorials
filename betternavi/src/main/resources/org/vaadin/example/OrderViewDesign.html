@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <style>
+$v-font-size: 16px;
+$v-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$v-border-radius: 0;
+$v-textfield-bevel: false;
+$v-textfield-shadow: false;
+$v-shadow: false;
+$v-bevel: false;
+$v-gradient: false;
+$v-textfield-border: 0;  
+.root-layout.form-template-vaadin {
+	$root-background-color: #ffffff;
+	$header-bar-height: 100px;
+	$main-color: #5AAAFA;
+	$menu-color: #5AAAFA;
+	$header-label-font-size: 1.618em;
+	background-color: $root-background-color;
+	padding: 60px;
+
+	.v-nativebutton{
+		background: none;
+		border: none;
+		
+		&:hover{
+			cursor: pointer;
+		}
+	}
+	
+	.header-label{
+		font-size: $header-label-font-size;
+		width: 100%;
+		margin-bottom: 20px;
+		color: #000000;
+		border-bottom: 3px solid #D0C7C7;
+	}
+	
+	.header-label-small{
+		width: 100%;
+		color: $main-color;
+        text-transform: uppercase;
+		border-bottom: 2px solid #D0C7C7;
+	}
+		
+	.billing-formlayout {
+		
+		background: #f6f3f3;
+		border: solid 1px #ffffff;
+		margin: 0 30px 0 0px;
+		float: left;
+		padding: 20px;
+		width: 100%;
+		max-width: 722px;
+		
+		.form-textfield{
+			background: none;
+			border-bottom: 2px solid #D0C7C7;
+		}
+		
+		.email-field{
+			min-width: 250px;
+		}
+    }
+        
+    .order-summary-layout{
+		background: #8CD211;
+		border: #ffffff;
+		float: right;
+		padding: 20px;
+            
+        .header-label-small {
+            color: #ffffff;
+            border-bottom-color: #C8F08F;
+        }
+        
+        .v-label{
+            color: #ffffff;
+        }
+
+		.cancel-order-button{
+			background: none;
+			border: none;
+			position: relative; 
+			margin-left: 15px;
+			margin-top: 10px;
+			padding: 0;
+			float: right;
+	
+			.v-icon{
+				font-size: 25px;
+				width: 25px;
+				height: 25px;
+				line-height: 25px;
+	            color: #4B8400;
+			}
+		}
+		
+		.order-sum{
+			position: absolute;
+			left: 170px;
+			text-align: right;
+			width: 150px;
+		}
+		
+		.total-sum{
+	        border-top: solid 2px #C8F08F;
+	        color: #C8F08F !important;
+	        font-size: 2em;
+	        &:first-letter {
+	            font-weight: 400;
+	        }
+		}
+	}
+	
+	&[width-range~="321px-768px"]{
+		padding: 10px;
+
+		.billing-formlayout{
+			margin: 15px 0 0 0;
+			width: 100% !important;
+		}
+			
+		.order-summary-layout{
+			margin: 15px 0 0 0;
+		}
+	}
+	
+	&[width-range~="769px-1426px"]{
+		.billing-formlayout{
+			margin-bottom: 30px;
+		}
+		
+		.order-summary-layout{
+			float: left;
+		}
+	}
+}
+
+.form-template-vaadin[width-range~="321px-768px"],
+.form-template-vaadin[width-range~="769px-1426px"]{
+	visibility: visible;
+}</style> 
+  <meta charset="UTF-8" name="design-properties" content="{&quot;RULERS_VISIBLE&quot;:true,&quot;GUIDELINES_VISIBLE&quot;:false,&quot;SNAP_TO_OBJECTS&quot;:true,&quot;SNAP_TO_GRID&quot;:true,&quot;SNAPPING_DISTANCE&quot;:10,&quot;PAPER_WIDTH&quot;:1440,&quot;PAPER_HEIGHT&quot;:900,&quot;PAPER_SCROLL_LEFT&quot;:1558,&quot;PAPER_SCROLL_TOP&quot;:2027,&quot;JAVA_SOURCES_ROOT&quot;:&quot;src/main/java&quot;,&quot;THEME&quot;:&quot;mytheme&quot;}">
+ </head> 
+ <body> 
+  <v-css-layout style-name="root-layout form-template-vaadin" responsive="true" id="root-layout" width-full="true" _id="root_layout"> 
+   <v-label style-name="header-label" plain-text="" _id="billing_header_label">
+     Billing Information 
+   </v-label> 
+   <v-css-layout style-name="main-content-wrapper" width-full="true" _id="main_content_wrapper"> 
+    <v-form-layout style-name="billing-formlayout" size-auto="true" margin-top="false" margin-bottom="false" _id="billing_form"> 
+     <v-label size-auto="true" plain-text="" _id="email_header_label">
+       Please enter your email address 
+     </v-label> 
+     <v-text-field input-prompt="Email" style-name="form-textfield email-field" width="382px" _id="email_field"></v-text-field> 
+     <v-label size-auto="true" plain-text="" _id="address_label">
+       Please enter your billing address 
+     </v-label> 
+     <v-horizontal-layout style-name="name-wrapper" spacing="true" _id="name_wrapper"> 
+      <v-text-field input-prompt="First Name" style-name="form-textfield" _id="firstname_field"></v-text-field> 
+      <v-text-field input-prompt="Last Name" style-name="form-textfield" _id="lastname_field"></v-text-field> 
+     </v-horizontal-layout> 
+     <v-text-field input-prompt="Street Address" style-name="form-textfield" _id="address_field"></v-text-field> 
+     <v-text-field input-prompt="Company" style-name="form-textfield" _id="company_field"></v-text-field> 
+     <v-text-field input-prompt="City" style-name="form-textfield" _id="city_field"></v-text-field> 
+     <v-horizontal-layout style-name="name-wrapper" spacing="true" _id="name_wrapper2"> 
+      <v-text-field input-prompt="State" style-name="form-textfield" _id="state_field"></v-text-field> 
+      <v-text-field input-prompt="Zip" style-name="form-textfield" _id="zip_field"></v-text-field> 
+     </v-horizontal-layout> 
+     <v-text-field input-prompt="Country" style-name="form-textfield" _id="country_field"></v-text-field> 
+     <v-text-field input-prompt="Phone" style-name="form-textfield" _id="phone_field"></v-text-field> 
+    </v-form-layout> 
+    <v-form-layout style-name="order-summary-layout" width="438px" margin-top="false" margin-bottom="false" _id="order_summary_layout"> 
+     <v-label style-name="header-label-small" size-auto="true" plain-text="" _id="order_heading">
+       Order Summary 
+     </v-label> 
+     <v-css-layout style-name="order-item" width="300px" _id="order_item"> 
+      <v-label style-name="order-label" width="260px" _id="order_label">
+        Vaadin Designer License 
+       <br> $ 389.00 
+      </v-label> 
+      <v-native-button icon="fonticon://FontAwesome/f057" style-name="cancel-order-button" width="25px" height="25px" plain-text="" _id="cancel_order_button"></v-native-button> 
+     </v-css-layout> 
+     <v-css-layout> 
+      <v-label style-name="tax-sum" size-auto="true" _id="tax_sum">
+        Tax : 
+       <span class="order-sum"> $0.00 </span> 
+      </v-label> 
+      <v-label style-name="total-sum" _id="total_sum">
+        Total : 
+       <span class="order-sum"> $ 389.00</span> 
+      </v-label> 
+     </v-css-layout> 
+    </v-form-layout> 
+   </v-css-layout> 
+  </v-css-layout>  
+ </body>
+</html>
