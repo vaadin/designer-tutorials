@@ -4,24 +4,27 @@ import java.util.Iterator;
 
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
-import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.navigator.ViewDisplay;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.UI;
 
-public class MainLayout extends MainLayoutDesign {
+public class MainLayout extends MainLayoutDesign implements ViewDisplay {
 
     private static final String STYLE_SELECTED = "selected";
     private Navigator navigator;
 
     public MainLayout() {
-        navigator = new Navigator(UI.getCurrent(), scroll_panel);
-        navigator.addView("", DashboardView.class);
+        navigator = new Navigator(UI.getCurrent(), (ViewDisplay) this);
         addNavigatorView(DashboardView.VIEW_NAME, DashboardView.class,
                 menuButton1);
         addNavigatorView(OrderView.VIEW_NAME, OrderView.class, menuButton2);
         addNavigatorView(AboutView.VIEW_NAME, AboutView.class, menuButton3);
-        navigator.addViewChangeListener(viewChangeListener);
+        if (navigator.getState().isEmpty()) {
+            navigator.navigateTo(DashboardView.VIEW_NAME);
+        } else {
+            navigator.navigateTo(navigator.getState());
+        }
     }
 
     private void doNavigate(String viewName) {
@@ -45,23 +48,16 @@ public class MainLayout extends MainLayoutDesign {
         }
     }
 
-    private final ViewChangeListener viewChangeListener = new ViewChangeListener() {
-
-        @Override
-        public boolean beforeViewChange(ViewChangeEvent event) {
-            return true;
-        }
-
-        @Override
-        public void afterViewChange(ViewChangeEvent event) {
-
+    @Override
+    public void showView(View view) {
+        if (view instanceof Component) {
+            scroll_panel.setContent((Component) view);
             Iterator<Component> it = side_bar.iterator();
             while (it.hasNext()) {
-                adjustStyleByData(it.next(),
-                        event.getNewView().getClass().getName());
-
+                adjustStyleByData(it.next(), view.getClass().getName());
             }
+        } else {
+            throw new IllegalArgumentException("View is not a Component");
         }
-
-    };
+    }
 }
