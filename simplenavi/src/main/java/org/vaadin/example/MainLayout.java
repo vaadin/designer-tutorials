@@ -11,7 +11,6 @@ public class MainLayout extends MainLayoutDesign {
         navigator.addView(StatsView.VIEW_NAME, StatsView.class);
         navigator.addView(PluginsView.VIEW_NAME, PluginsView.class);
         navigator.addView(PermissionsView.VIEW_NAME, PermissionsView.class);
-        UI.getCurrent().setNavigator(navigator);
 
         menuButton1.addClickListener(event -> doNavigate(StatsView.VIEW_NAME));
         menuButton2
