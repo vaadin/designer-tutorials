@@ -29,7 +29,11 @@ public class MyUI extends UI {
 
         Navigator navigator = new Navigator(this, (ViewDisplay) mainLayout);
         navigator.addProvider(viewProvider);
-        navigator.navigateTo("dashboard");
+        if (navigator.getState().isEmpty()) {
+            navigator.navigateTo(DashboardView.VIEW_NAME);
+        } else {
+            navigator.navigateTo(navigator.getState());
+        }
 
     }
 }

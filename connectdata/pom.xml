@@ -88,13 +88,13 @@
 			<groupId>com.vaadin</groupId>
 			<artifactId>vaadin-cdi</artifactId>
 			<version>${version.vaadin-cdi}</version>
+			<exclusions>
+			    <exclusion>
+			        <artifactId>deltaspike-core-impl</artifactId>
+			        <groupId>org.apache.deltaspike.core</groupId>
+			    </exclusion>
+			</exclusions>
 		</dependency>
-        <dependency>
-            <groupId>org.apache.deltaspike.modules</groupId>
-            <artifactId>deltaspike-data-module-impl</artifactId>
-            <version>${version.deltaspike}</version>
-            <scope>runtime</scope>
-        </dependency>
 	</dependencies>
 
 	<build>

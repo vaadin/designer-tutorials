@@ -262,3 +262,145 @@ $v-textfield-border: 0;
 	visibility: visible;
 }
 
+// Styles imported from OrderViewDesign.html
+$v-font-size: 16px;
+$v-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$v-border-radius: 0;
+$v-textfield-bevel: false;
+$v-textfield-shadow: false;
+$v-shadow: false;
+$v-bevel: false;
+$v-gradient: false;
+$v-textfield-border: 0;  
+.root-layout.form-template-vaadin {
+	$root-background-color: #ffffff;
+	$header-bar-height: 100px;
+	$main-color: #5AAAFA;
+	$menu-color: #5AAAFA;
+	$header-label-font-size: 1.618em;
+	background-color: $root-background-color;
+	padding: 60px;
+
+	.v-nativebutton{
+		background: none;
+		border: none;
+		
+		&:hover{
+			cursor: pointer;
+		}
+	}
+	
+	.header-label{
+		font-size: $header-label-font-size;
+		width: 100%;
+		margin-bottom: 20px;
+		color: #000000;
+		border-bottom: 3px solid #D0C7C7;
+	}
+	
+	.header-label-small{
+		width: 100%;
+		color: $main-color;
+        text-transform: uppercase;
+		border-bottom: 2px solid #D0C7C7;
+	}
+		
+	.billing-formlayout {
+		
+		background: #f6f3f3;
+		border: solid 1px #ffffff;
+		margin: 0 30px 0 0px;
+		float: left;
+		padding: 20px;
+		width: 100%;
+		max-width: 722px;
+		
+		.form-textfield{
+			background: none;
+			border-bottom: 2px solid #D0C7C7;
+		}
+		
+		.email-field{
+			min-width: 250px;
+		}
+    }
+        
+    .order-summary-layout{
+		background: #8CD211;
+		border: #ffffff;
+		float: right;
+		padding: 20px;
+            
+        .header-label-small {
+            color: #ffffff;
+            border-bottom-color: #C8F08F;
+        }
+        
+        .v-label{
+            color: #ffffff;
+        }
+
+		.cancel-order-button{
+			background: none;
+			border: none;
+			position: relative; 
+			margin-left: 15px;
+			margin-top: 10px;
+			padding: 0;
+			float: right;
+	
+			.v-icon{
+				font-size: 25px;
+				width: 25px;
+				height: 25px;
+				line-height: 25px;
+	            color: #4B8400;
+			}
+		}
+		
+		.order-sum{
+			position: absolute;
+			left: 170px;
+			text-align: right;
+			width: 150px;
+		}
+		
+		.total-sum{
+	        border-top: solid 2px #C8F08F;
+	        color: #C8F08F !important;
+	        font-size: 2em;
+	        &:first-letter {
+	            font-weight: 400;
+	        }
+		}
+	}
+	
+	&[width-range~="321px-768px"]{
+		padding: 10px;
+
+		.billing-formlayout{
+			margin: 15px 0 0 0;
+			width: 100% !important;
+		}
+			
+		.order-summary-layout{
+			margin: 15px 0 0 0;
+		}
+	}
+	
+	&[width-range~="769px-1426px"]{
+		.billing-formlayout{
+			margin-bottom: 30px;
+		}
+		
+		.order-summary-layout{
+			float: left;
+		}
+	}
+}
+
+.form-template-vaadin[width-range~="321px-768px"],
+.form-template-vaadin[width-range~="769px-1426px"]{
+	visibility: visible;
+}
+
