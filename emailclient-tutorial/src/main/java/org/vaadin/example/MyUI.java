@@ -16,7 +16,12 @@ public class MyUI extends UI {
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
-        setContent(new ApplicationDesign());
+        final ApplicationDesign design = new ApplicationDesign();
+        setContent(design);
+
+        for (int i = 0; i < 10; i++) {
+            design.messageList.addComponent(new Message());
+        }
     }
 
     @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)

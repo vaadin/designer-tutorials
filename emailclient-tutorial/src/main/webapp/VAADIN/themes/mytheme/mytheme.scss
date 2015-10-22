@@ -6,47 +6,54 @@ $v-border-radius: 10px;
 @import "../valo/valo.scss";
 
 @mixin mytheme {
-  @include valo;
+    @include valo;
 
-  // More spacing around the menu items (and re-align badge after that change)
-  .valo-menu-item {
-      line-height: 45px;
-      .valo-menu-badge {
-          top:  12px;
-      }
-  }
-  
-   // Only for the "desktop" (wide) version: make menu wider
-  .valo-menu-responsive[width-range~="1101px-"] {
-      .valo-menu-item-caption {
-          min-width: 150px;
-      }
-  }
-  
-  // Make the compose button bigger and add some spacing
-  .compose {
-    padding-top: 50px;
-    .v-icon {
-      	font-size: 50px;
-    	color: #ccc;
-      	padding-bottom: 15px;
-    }
-    
-    // Make the compose button react when mousing over
-    &:hover {
-        color: white;
-        .v-icon {
-            color: white;
+    // More spacing around the menu items (and re-align badge after that change)
+    .valo-menu-item {
+        line-height: 45px;
+        .valo-menu-badge {
+            top:  12px;
         }
     }
-    
-    // Workaround for always visible scroll bar
-    &:after {
-        right: 0px;
-    }
-  }
   
+    // Only for the "desktop" (wide) version: make menu wider
+    .valo-menu-responsive[width-range~="1101px-"] {
+        .valo-menu-item-caption {
+            min-width: 150px;
+        }
+    }
+
+    // Make the compose button bigger and add some spacing
+    .compose {
+        padding-top: 50px;
+        .v-icon {
+            font-size: 50px;
+            color: #ccc;
+            padding-bottom: 15px;
+        }
+
+        // Make the compose button react when mousing over
+        &:hover {
+            color: white;
+            .v-icon {
+                color: white;
+            }
+        }
+
+        // Workaround for always visible scroll bar
+        &:after {
+            right: 0px;
+        }
+    }
     .valo-menu {
-      	@include linear-gradient(230deg, #433 0%, #382a2a 100%);
+        @include linear-gradient(230deg, #433 0%, #382a2a 100%);
+    }
+  
+    .header, .content {
+        border-bottom: 1px solid #ccc;
+    }
+
+    .message {
+        overflow: hidden;
     }
 }

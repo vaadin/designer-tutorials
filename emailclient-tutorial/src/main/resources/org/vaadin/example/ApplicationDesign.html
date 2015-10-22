@@ -1,13 +1,7 @@
 <!DOCTYPE html>
 <html>
  <head>
-  <style>
-// Workaround for a https://dev.vaadin.com/ticket/19170 to get hidden icons in some environments to show
-#responsive-application-template.valo-menu-responsive .valo-menu-part .valo-menu-item span.v-icon {
-	opacity: 1.0;
-}
- </style> 
-  <meta charset="UTF-8" name="design-properties" content="{&quot;RULERS_VISIBLE&quot;:true,&quot;GUIDELINES_VISIBLE&quot;:false,&quot;SNAP_TO_OBJECTS&quot;:true,&quot;SNAP_TO_GRID&quot;:true,&quot;SNAPPING_DISTANCE&quot;:10,&quot;PAPER_WIDTH&quot;:1440,&quot;PAPER_HEIGHT&quot;:900,&quot;PAPER_SCROLL_LEFT&quot;:1591,&quot;PAPER_SCROLL_TOP&quot;:1886,&quot;JAVA_SOURCES_ROOT&quot;:&quot;src/main/java&quot;,&quot;THEME&quot;:&quot;mytheme&quot;}">
+  <meta charset="UTF-8" name="design-properties" content="{&quot;RULERS_VISIBLE&quot;:true,&quot;GUIDELINES_VISIBLE&quot;:false,&quot;SNAP_TO_OBJECTS&quot;:true,&quot;SNAP_TO_GRID&quot;:true,&quot;SNAPPING_DISTANCE&quot;:10,&quot;PAPER_WIDTH&quot;:1176,&quot;PAPER_HEIGHT&quot;:900,&quot;PAPER_SCROLL_LEFT&quot;:1969,&quot;PAPER_SCROLL_TOP&quot;:1900,&quot;JAVA_SOURCES_ROOT&quot;:&quot;src/main/java&quot;,&quot;THEME&quot;:&quot;mytheme&quot;}">
  </head> 
  <body> 
   <vaadin-horizontal-layout style-name="valo-menu-responsive" responsive="true" id="responsive-application-template" size-full="true"> 
@@ -44,9 +38,31 @@
      </vaadin-css-layout> 
     </vaadin-css-layout> 
    </vaadin-css-layout> 
-   <vaadin-vertical-layout spacing="true" size-full="true" margin="true" _id="content" :expand=""> 
-    <vaadin-horizontal-layout width-full="true"></vaadin-horizontal-layout> 
-    <vaadin-panel size-full="true" :expand=""></vaadin-panel> 
+   <vaadin-vertical-layout size-full="true" _id="content" :expand=""> 
+    <vaadin-horizontal-layout style-name="header" spacing="true" width-full="true" margin="true"> 
+     <vaadin-label size-auto="true" plain-text="" :middle="" :center="">
+       Sort by: 
+     </vaadin-label> 
+     <vaadin-combo-box item-caption-mode="id" width="150px" _id="sortCombo" :expand=""> 
+      <option>Option 1</option> 
+      <option>Option 2</option> 
+      <option>Option 3</option> 
+     </vaadin-combo-box> 
+     <vaadin-button icon="fonticon://FontAwesome/f00d" plain-text="" _id="deleteButton"></vaadin-button> 
+     <vaadin-css-layout style-name="v-component-group"> 
+      <vaadin-button icon="fonticon://FontAwesome/f112" plain-text="" _id="replyButton"></vaadin-button> 
+      <vaadin-button icon="fonticon://FontAwesome/f122" plain-text="" _id="replyAllButton"></vaadin-button> 
+      <vaadin-button icon="fonticon://FontAwesome/f064" plain-text="" _id="forwardButton"></vaadin-button> 
+     </vaadin-css-layout> 
+     <vaadin-combo-box item-caption-mode="id" width="70px"> 
+      <option>Option 1</option> 
+      <option>Option 2</option> 
+      <option>Option 3</option> 
+     </vaadin-combo-box> 
+    </vaadin-horizontal-layout> 
+    <vaadin-panel style-name="borderless" size-full="true" :expand=""> 
+     <vaadin-vertical-layout _id="messageList"></vaadin-vertical-layout> 
+    </vaadin-panel> 
    </vaadin-vertical-layout> 
   </vaadin-horizontal-layout>  
  </body>
