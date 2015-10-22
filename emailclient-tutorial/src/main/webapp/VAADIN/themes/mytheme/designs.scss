@@ -1,0 +1,6 @@
+// Styles imported from ApplicationDesign.html
+// Workaround for a https://dev.vaadin.com/ticket/19170 to get hidden icons in some environments to show
+#responsive-application-template.valo-menu-responsive .valo-menu-part .valo-menu-item span.v-icon {
+	opacity: 1.0;
+}
+
