@@ -56,10 +56,14 @@ $v-border-radius: 10px;
         border-bottom: 1px solid #ccc;
     }
 
-    .message {
-        overflow: hidden;
+    .message-layout {
         .message-sender {
-            white-space: nowrap; 
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .message {
+            overflow: hidden;
         }
     }
 }
