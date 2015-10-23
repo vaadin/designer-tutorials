@@ -19,6 +19,8 @@ public class MyUI extends UI {
         final ApplicationDesign design = new ApplicationDesign();
         setContent(design);
 
+        // This replaces a proper backend just to simulate how the view behaves
+        // with dynamic content
         for (int i = 0; i < 10; i++) {
             design.messageList.addComponent(new Message());
         }
