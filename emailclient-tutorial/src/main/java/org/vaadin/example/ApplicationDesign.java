@@ -37,6 +37,7 @@ public class ApplicationDesign extends HorizontalLayout {
     protected Button replyAllButton;
     protected Button forwardButton;
     protected VerticalLayout messageList;
+    protected Button indicatorButton;
 
     public ApplicationDesign() {
         Design.read(this);

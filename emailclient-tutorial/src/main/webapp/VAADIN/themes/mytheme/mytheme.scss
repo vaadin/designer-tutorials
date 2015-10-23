@@ -58,5 +58,8 @@ $v-border-radius: 10px;
 
     .message {
         overflow: hidden;
+        .message-sender {
+            white-space: nowrap; 
+        }
     }
 }
