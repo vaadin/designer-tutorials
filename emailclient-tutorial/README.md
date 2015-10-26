@@ -2,7 +2,8 @@ Vaadin Designer demo: email client
 ==================================
 This project contains the final result of this tutorial. You can fork this project and see the results yourself or you can try to start from scratch and try to get to the same result.
 
-There is this [video](https://vaadin.com/designer) Marc and Ville from Vaadin made, where they demonstrate how easily the Vaadin Designer can help you design and implement an application UI. In the video they use a design from a site called www.100daysui.com where Paul Flavius Nechita made a UI design per day. Day [#38](https://dribbble.com/shots/2181203-Day-038-Email-Client/attachments/402034) was a screen of an email client. This tutorial breaks down the steps in the video to help you to follow the same workflow. Let’s see how close we can get to the design with only little effort.
+There is a [video](https://vaadin.com/designer) Marc and Ville from Vaadin made, in which they demonstrate how easily the Vaadin Designer can help you design and implement an application UI. In the video they use a design from a site called www.100daysui.com where Paul Flavius Nechita made a UI design per day. The design for the day [#38](https://dribbble.com/shots/2181203-Day-038-Email-Client/attachments/402034) was a mockup of an email client. This tutorial breaks down the steps in the video to help you to follow the same workflow. Let’s see how close we can get to the design with only little effort.
+
 Start by creating a project
 ---------------------------
 Create a new Vaadin 7 project either by using the Vaadin Eclipse plugin or Maven. You should use version 7.5.7 or newer of Vaadin.
@@ -16,14 +17,14 @@ The application UI is divided into three areas: the menu layout on the left side
 
 The application layout created with the template is also responsive meaning that menu items are displayed in a more compact way when the width of the browser window gets smaller e.g. in a mobile browser. The responsiveness is done using Vaadin frameworks responsive extension and specific style names in Valo theme. The responsive part is out of scope of this tutorial.
 
-Create a new design in your project by right clicking your project and selecting New › Other… › Vaadin Design. In the dialog select the Responsive Application template and give the design a name ApplicationDesign.
+Create a new design in your project by right clicking your project and selecting __New › Other… › Vaadin Design.__ In the dialog select the __Responsive Application template__ and give the design a name ApplicationDesign.
 
 _Starting point from responsive template_  
 ![Starting point from responsive template](https://cloud.githubusercontent.com/assets/1398470/10730425/86d938de-7bf8-11e5-8650-7a841071718d.png)
 
 Beautiful buttons
 -----------------
-Remove the blue menuTitle HorizontalLayout having the text ‘The Application’. Select the top most button userButton and change its style from the properties panel. Clear the value of PrimaryStyleName property and set the StyleName property value with opening style editor ![property editor button](https://cloud.githubusercontent.com/assets/1398470/10730428/8b182eaa-7bf8-11e5-9735-859c9d878d1d.png). From ValoTheme add styles `BUTTON_BORDERLESS` and `BUTTON_ICON_ALIGN_TOP`. Click OK to close the style editor. As you can see the button style changed and the button StyleName property has value ‘borderless icon-align-top’. Sometimes if you remember the style name it’s faster just to write the style name instead of using the style editor.
+Remove the blue menuTitle HorizontalLayout having the text ‘The Application’. Select the top most button userButton and change its style from the properties panel. Clear the value of PrimaryStyleName property and set the StyleName property value with opening style editor ![property editor button](https://cloud.githubusercontent.com/assets/1398470/10730428/8b182eaa-7bf8-11e5-9735-859c9d878d1d.png). From ValoTheme add styles `BUTTON_BORDERLESS` and `BUTTON_ICON_ALIGN_TOP`. Click OK to close the style editor. As you can see the button style changed and the button StyleName property has value ‘borderless icon-align-top’. Sometimes it’s faster just to write the style name instead of using the style editor, if you remember the style name that is.
 
 Next change the userButton height to 150px, change its caption to Compose, and change the name of it from userButton to composeButton. Also change the button icon with icon editor. Select Font Icons tab and select icon called `EDIT`.
 
@@ -36,7 +37,7 @@ _Buttons made a bit better_
 
 The left side menu looks already quite nice, but you need to style it up a bit to get it look more like the UI mockup. You need to add the styles to your theme scss file. Remember that any Valo variables need to be set before valo.scss is imported. All the other style definitions go inside your theme mixin.
 
-To change the color of the menu background: `$valo-menu-background-color: #433;`
+Change the color of the menu background: `$valo-menu-background-color: #433;`
 
 Change the menu badge roundness: `$v-border-radius: 10px;`
 
