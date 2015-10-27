@@ -175,6 +175,6 @@ protected void init(VaadinRequest vaadinRequest) {
 
 Final result
 ------------
-The final result looks quite nice. You started from a basic responsive application template and took some simple steps to modify the design to look like our design goal. First you modified the left side menu to have correct buttons and styled the compose button to be more dominant. Then you implemented rest of the application layout to contain a toolbar and a scrollable message list. Finally you created a message component to be used dynamically in your Java code. After these steps your design should be look more or less like in the image below. Great job!
+The final result looks quite nice. You started from a basic responsive application template and took some simple steps to modify the design to look like the design mockup. First you modified the left side menu to have correct buttons and styled the compose button to be more dominant. Then you implemented rest of the application layout to contain a toolbar and a scrollable message list. Finally you created a message component to be used dynamically in your Java code. After these steps your design should look more or less like in the image below. Great job!
 
 ![Final result](https://cloud.githubusercontent.com/assets/1398470/10730450/ad4dae46-7bf8-11e5-9dd2-a00dda94b1cd.png)
