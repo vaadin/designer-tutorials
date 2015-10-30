@@ -69,13 +69,9 @@ $v-border-radius: 10px;
         .v-caption-message {
             padding-left: 0;
         }
-    }
 
-    .indicator-star .v-icon {
-        color: #ff3301;
-    }
-
-    .indicator-circle .v-icon {
-        color: #0398ff;
+        &:hover {
+            cursor: pointer;
+        }
     }
 }

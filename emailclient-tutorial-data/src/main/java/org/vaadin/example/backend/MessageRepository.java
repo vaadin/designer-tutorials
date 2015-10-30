@@ -12,8 +12,8 @@ public interface MessageRepository extends EntityRepository<Message, Long> {
     @Query("select count(m) from Message m where m.isRead = false")
     Long countUnread();
 
-    @Query("select count(m) from Message m where m.isFlagged = true")
+    @Query("select count(m) from Message m where m.flag is not null")
     Long countFlagged();
 
-    List<Message> findByIsFlaggedAndIsTrashed(boolean flagged, boolean trashed);
+    List<Message> findByFlagIsNotNullAndIsTrashed(boolean trashed);
 }

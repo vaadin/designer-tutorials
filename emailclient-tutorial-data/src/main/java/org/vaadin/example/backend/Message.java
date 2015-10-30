@@ -3,6 +3,8 @@ package org.vaadin.example.backend;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Lob;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -11,9 +13,14 @@ import javax.persistence.TemporalType;
 public class Message extends AbstractEntity {
 
     private boolean isRead;
-    private boolean isFlagged;
     private boolean isTrashed;
     private String sender;
+    @Enumerated(EnumType.STRING)
+    private Flag flag;
+
+    public enum Flag {
+        FLAG_STAR
+    }
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date sent;
@@ -30,10 +37,6 @@ public class Message extends AbstractEntity {
         this.isRead = isRead;
     }
 
-    public boolean isFlagged() {
-        return isFlagged;
-    }
-
     public boolean isTrashed() {
         return isTrashed;
     }
@@ -42,8 +45,12 @@ public class Message extends AbstractEntity {
         this.isTrashed = isTrashed;
     }
 
-    public void setFlagged(boolean isFlagged) {
-        this.isFlagged = isFlagged;
+    public Flag getFlag() {
+        return flag;
+    }
+
+    public void setFlag(Flag flag) {
+        this.flag = flag;
     }
 
     public String getSender() {

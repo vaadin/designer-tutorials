@@ -1,5 +1,10 @@
 package org.vaadin.example.ui;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+import java.util.function.Supplier;
+
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.servlet.ServletContextEvent;
@@ -38,14 +43,14 @@ public class MyUI extends UI {
     @Inject
     private CDIViewProvider viewProvider;
 
+    private Optional<String> selectedFolder = Optional.empty();
+
+    private Map<String, Supplier<Long>> badgeSuppliers = new HashMap<>();
+
     @Override
     protected void init(VaadinRequest vaadinRequest) {
         final ApplicationDesign design = new ApplicationDesign();
         setContent(design);
-
-        setMenuBadge(design.inboxButton, "Inbox", messageFacade.countUnread());
-        setMenuBadge(design.flaggedButton, "Flagged",
-                messageFacade.countFlagged());
 
         Navigator navigator = new Navigator(this, design.messagePanel);
         navigator.addProvider(viewProvider);
@@ -56,22 +61,40 @@ public class MyUI extends UI {
         } else {
             navigator.navigateTo(navigator.getState());
         }
-        mapButton(design.inboxButton, MessageFacade.FOLDER_INBOX);
+        mapButton(design.inboxButton, MessageFacade.FOLDER_INBOX,
+                Optional.of(() -> messageFacade.countUnread()));
         mapButton(design.draftsButton, MessageFacade.FOLDER_DRAFTS);
         mapButton(design.sentButton, MessageFacade.FOLDER_SENT);
         mapButton(design.junkButton, MessageFacade.FOLDER_JUNK);
         mapButton(design.trashButton, MessageFacade.FOLDER_TRASH);
-        mapButton(design.flaggedButton, MessageFacade.FOLDER_FLAGGED);
+        mapButton(design.flaggedButton, MessageFacade.FOLDER_FLAGGED,
+                Optional.of(() -> messageFacade.countFlagged()));
+
+        design.menuItems.forEach(this::setMenuBadge);
     }
 
     public void folderSelected(@Observes FolderSelectEvent event) {
         ((ApplicationDesign) getContent()).menuItems.forEach(
                 component -> adjustStyleByData(component, event.getFolder()));
+        selectedFolder = Optional.of(event.getFolder());
+    }
+
+    public void messageModified(@Observes MessageModifiedEvent event) {
+        ((ApplicationDesign) getContent()).menuItems
+                .forEach(this::setMenuBadge);
     }
 
     private void mapButton(Button button, String folderName) {
+        mapButton(button, folderName, Optional.empty());
+    }
+
+    private void mapButton(Button button, String folderName,
+            Optional<Supplier<Long>> badgeSupplier) {
         button.addClickListener(event -> navigateToFolder(folderName));
         button.setData(folderName);
+        if (badgeSupplier.isPresent()) {
+            badgeSuppliers.put(folderName, badgeSupplier.get());
+        }
     }
 
     private void adjustStyleByData(Component component, Object data) {
@@ -88,16 +111,25 @@ public class MyUI extends UI {
         getNavigator().navigateTo(FolderView.VIEW_NAME + "/" + folder);
     }
 
-    private void setMenuBadge(Component component, String caption, Long count) {
-        String badgeText = (count != null && count > 0)
-                ? (count > 99) ? "99+" : count.toString() : "";
-        String captionFormat = badgeText.isEmpty() ? ""
-                : "%s <span class=\"valo-menu-badge\">%s</span>";
-        if (captionFormat.isEmpty()) {
-            component.setCaption(caption);
-        } else {
-            component.setCaption(
-                    String.format(captionFormat, caption, badgeText));
+    private void setMenuBadge(Component component) {
+        if (component instanceof Button) {
+            Button button = (Button) component;
+            if (button.getData() != null
+                    && button.getData() instanceof String) {
+                String folder = (String) button.getData();
+                Long count = badgeSuppliers.containsKey(folder)
+                        ? badgeSuppliers.get(folder).get() : 0;
+                String badgeText = (count != null && count > 0)
+                        ? (count > 99) ? "99+" : count.toString() : "";
+                String captionFormat = badgeText.isEmpty() ? ""
+                        : "%s <span class=\"valo-menu-badge\">%s</span>";
+                if (captionFormat.isEmpty()) {
+                    component.setCaption(folder);
+                } else {
+                    component.setCaption(
+                            String.format(captionFormat, folder, badgeText));
+                }
+            }
         }
     }
 

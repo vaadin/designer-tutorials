@@ -1,5 +1,13 @@
 package org.vaadin.example.ui;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Consumer;
+
+import org.vaadin.example.backend.Message;
+import org.vaadin.example.backend.Message.Flag;
 import org.vaadin.example.ui.themes.mytheme.MyTheme;
 
 import com.vaadin.server.FontAwesome;
@@ -10,36 +18,51 @@ import com.vaadin.server.FontAwesome;
  */
 public class MessageComponent extends MessageDesign {
 
-    public MessageComponent(String sender, String subject, String body) {
-        senderLabel.setValue(sender);
-        messageLabel.setCaption(subject);
-        messageLabel.setValue(body);
+    private static final List<String> MESSAGE_STYLES = Collections
+            .unmodifiableList(Arrays.asList(MyTheme.INDICATOR_CIRCLE,
+                    MyTheme.INDICATOR_STAR));
+
+    public MessageComponent(Message message,
+            Optional<Consumer<ClickEvent<MessageComponent, Message>>> messageClicked) {
+        senderLabel.setValue(message.getSender());
+        messageLabel.setCaption(message.getSubject());
+        messageLabel.setValue(message.getBody());
+
+        addLayoutClickListener(event -> messageClicked.ifPresent(
+                consumer -> consumer.accept(new ClickEvent<>(this, message))));
+
+        setIndicator(message.isRead(), message.getFlag());
     }
 
-    public void clearIndicator() {
-        setStyle(false, false);
-    }
-
-    public void setNewIndicator() {
-        setStyle(true, false);
-    }
-
-    public void setFlagIndicator() {
-        setStyle(false, true);
-    }
-
-    private void setStyle(boolean _new, boolean flagged) {
-        indicatorButton.removeStyleName(MyTheme.INDICATOR_CIRCLE);
-        indicatorButton.removeStyleName(MyTheme.INDICATOR_STAR);
-        if (flagged) {
-            indicatorButton.setIcon(FontAwesome.STAR);
-            indicatorButton.addStyleName(MyTheme.INDICATOR_STAR);
-        } else if (_new) {
+    public void setIndicator(boolean read, Flag flag) {
+        MESSAGE_STYLES.forEach(this::removeStyleName);
+        indicatorButton.setIcon(null);
+        if (!read) {
             indicatorButton.setIcon(FontAwesome.CIRCLE);
             indicatorButton.addStyleName(MyTheme.INDICATOR_CIRCLE);
-        } else {
-            indicatorButton.setIcon(null);
+        } else if (flag != null) {
+            if (flag == Flag.FLAG_STAR) {
+                indicatorButton.setIcon(FontAwesome.STAR);
+                indicatorButton.addStyleName(MyTheme.INDICATOR_STAR);
+            }
+        }
+    }
+
+    public static class ClickEvent<T, PAYLOAD> {
+        private final T source;
+        private final PAYLOAD data;
+
+        public ClickEvent(T source, PAYLOAD data) {
+            this.source = source;
+            this.data = data;
         }
 
+        public T getSource() {
+            return source;
+        }
+
+        public PAYLOAD getData() {
+            return data;
+        }
     }
 }
