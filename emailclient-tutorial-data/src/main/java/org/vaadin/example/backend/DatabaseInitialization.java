@@ -36,7 +36,7 @@ public class DatabaseInitialization {
                 LocalDateTime.of(2015, 10, 19, 18, 20),
                 "As you might have noticed, we at Vaadin have been experimenting with bringing our Grid and Charts components to a new audience by wrapping "
                         + "them into Polymer elements. Polymer is Google’s project to bring Web Components into developers’ hands and into production.",
-                true, false);
+                true, true);
         createMessage("Tanja Repo", "Come and meet us at JavaOne 2015",
                 LocalDateTime.of(2015, 10, 13, 17, 50),
                 "Once again Vaadin packs up for the upcoming JavaOne 2015 and heads to San Francisco, US. JavaOne is ‘the event’ for Java enthusiasts, "
@@ -44,16 +44,17 @@ public class DatabaseInitialization {
                 true, false);
     }
 
-    private MessageEntity createMessage(String sender, String subject,
+    private Message createMessage(String sender, String subject,
             LocalDateTime dateTime, String body, boolean isRead,
             boolean isFlagged) {
-        MessageEntity msg = new MessageEntity();
+        Message msg = new Message();
         msg.setSender(sender);
         msg.setSubject(subject);
         msg.setSent(Date.from(dateTime.toInstant(ZoneOffset.UTC)));
         msg.setBody(body);
-        msg.setRead(false);
-        msg.setFlagged(false);
+        msg.setRead(isRead);
+        msg.setFlagged(isFlagged);
+        msg.setTrashed(false);
         msgRepo.saveAndFlush(msg);
         return msg;
     }

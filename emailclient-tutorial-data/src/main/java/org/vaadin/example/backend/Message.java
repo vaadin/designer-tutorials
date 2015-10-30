@@ -8,10 +8,11 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-public class MessageEntity extends AbstractEntity {
+public class Message extends AbstractEntity {
 
     private boolean isRead;
     private boolean isFlagged;
+    private boolean isTrashed;
     private String sender;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -31,6 +32,14 @@ public class MessageEntity extends AbstractEntity {
 
     public boolean isFlagged() {
         return isFlagged;
+    }
+
+    public boolean isTrashed() {
+        return isTrashed;
+    }
+
+    public void setTrashed(boolean isTrashed) {
+        this.isTrashed = isTrashed;
     }
 
     public void setFlagged(boolean isFlagged) {

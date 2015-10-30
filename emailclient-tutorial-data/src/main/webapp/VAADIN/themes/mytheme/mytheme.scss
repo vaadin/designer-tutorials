@@ -65,5 +65,17 @@ $v-border-radius: 10px;
         .message {
             overflow: hidden;
         }
+
+        .v-caption-message {
+            padding-left: 0;
+        }
+    }
+
+    .indicator-star .v-icon {
+        color: #ff3301;
+    }
+
+    .indicator-circle .v-icon {
+        color: #0398ff;
     }
 }
