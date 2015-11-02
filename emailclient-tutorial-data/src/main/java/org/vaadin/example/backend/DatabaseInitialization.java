@@ -4,12 +4,12 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Date;
 
-import javax.enterprise.context.ApplicationScoped;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import org.vaadin.example.backend.Message.Flag;
 
-@ApplicationScoped
+@Stateless
 public class DatabaseInitialization {
 
     @Inject

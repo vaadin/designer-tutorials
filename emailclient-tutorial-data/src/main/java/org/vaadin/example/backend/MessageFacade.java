@@ -32,7 +32,7 @@ public class MessageFacade {
             if (folder.equals(FOLDER_INBOX)) {
                 return repository.findAll();
             } else if (folder.equals(FOLDER_FLAGGED)) {
-                return repository.findByFlagIsNotNullAndIsTrashed(false);
+                return repository.findByFlagIsNotNullAndTrashed(false);
             }
         }
         return new ArrayList<>();
@@ -43,7 +43,7 @@ public class MessageFacade {
     }
 
     public long countFlagged() {
-        return repository.countFlagged();
+        return repository.countByFlagIsNotNull();
     }
 
     public void save(Message message) {

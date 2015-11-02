@@ -12,8 +12,8 @@ import javax.persistence.TemporalType;
 @Entity
 public class Message extends AbstractEntity {
 
-    private boolean isRead;
-    private boolean isTrashed;
+    private boolean read;
+    private boolean trashed;
     private String sender;
     @Enumerated(EnumType.STRING)
     private Flag flag;
@@ -30,19 +30,19 @@ public class Message extends AbstractEntity {
     private String body;
 
     public boolean isRead() {
-        return isRead;
+        return read;
     }
 
-    public void setRead(boolean isRead) {
-        this.isRead = isRead;
+    public void setRead(boolean read) {
+        this.read = read;
     }
 
     public boolean isTrashed() {
-        return isTrashed;
+        return trashed;
     }
 
-    public void setTrashed(boolean isTrashed) {
-        this.isTrashed = isTrashed;
+    public void setTrashed(boolean trashed) {
+        this.trashed = trashed;
     }
 
     public Flag getFlag() {

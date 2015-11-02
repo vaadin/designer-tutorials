@@ -10,12 +10,6 @@ import javax.inject.Inject;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
-import javax.transaction.HeuristicMixedException;
-import javax.transaction.HeuristicRollbackException;
-import javax.transaction.NotSupportedException;
-import javax.transaction.RollbackException;
-import javax.transaction.SystemException;
-import javax.transaction.UserTransaction;
 
 import org.vaadin.example.backend.DatabaseInitialization;
 import org.vaadin.example.backend.MessageFacade;
@@ -138,9 +132,6 @@ public class MyUI extends UI {
             implements ServletContextListener {
 
         @Inject
-        private UserTransaction transaction;
-
-        @Inject
         private DatabaseInitialization init;
 
         @Override
@@ -150,15 +141,7 @@ public class MyUI extends UI {
 
         @Override
         public void contextInitialized(ServletContextEvent arg0) {
-            try {
-                transaction.begin();
-                init.initDatabaseIfEmpty();
-                transaction.commit();
-            } catch (NotSupportedException | SystemException | SecurityException
-                    | IllegalStateException | RollbackException
-                    | HeuristicMixedException | HeuristicRollbackException e) {
-                e.printStackTrace();
-            }
+            init.initDatabaseIfEmpty();
         }
     }
 }
