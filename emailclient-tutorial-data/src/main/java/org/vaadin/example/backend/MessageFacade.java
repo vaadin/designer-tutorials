@@ -39,11 +39,11 @@ public class MessageFacade {
     }
 
     public long countUnread() {
-        return repository.countUnread();
+        return repository.findByRead(false).count();
     }
 
     public long countFlagged() {
-        return repository.countByFlagIsNotNull();
+        return repository.findByFlagIsNotNull().count();
     }
 
     public void save(Message message) {
