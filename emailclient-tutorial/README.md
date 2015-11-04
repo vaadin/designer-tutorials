@@ -2,7 +2,7 @@ Vaadin Designer demo: email client
 ==================================
 This project contains the final result of this tutorial. You can fork this project and see the result yourself or you can start from scratch and try to get to the same result.
 
-In this video Marc and Ville from Vaadin demonstrate how the Vaadin Designer can help you design and implement application UIs.
+In the following tutorial you will build a bit more extensive application UI than in some of the earlier tutorials. This tutorial familiarizes you with the different features of Vaadin Designer and gives you ideas how the tool can be used more effectively. The tutorial is based on a video, where Marc and Ville from Vaadin demonstrate how the Vaadin Designer can be used to create a substantial application from an existing design.
 
 [![Vaadin Designer demonstration](https://cloud.githubusercontent.com/assets/1398470/10881298/3b1b49ba-816a-11e5-812f-873f4ae5e953.png)](https://www.youtube.com/watch?v=-6Ix8WHgD6g "Vaadin Designer demonstration")
 
@@ -21,29 +21,39 @@ The application UI is divided into three areas: the menu layout on the left side
 
 The application layout created with the template is also responsive meaning that menu items are displayed in a more compact way when the width of the browser window gets smaller e.g. in a mobile browser. The responsiveness is done using Vaadin frameworks responsive extension and specific style names in Valo theme. The responsive part is out of scope of this tutorial.
 
-Create a new design in your project by right clicking your project and selecting __New › Other… › Vaadin Design.__ In the dialog select the __Responsive Application template__ and give the design a name ApplicationDesign.
+* Create a new design in your project by right clicking your project and selecting __New › Other… › Vaadin Design.__ 
+* In the dialog select the __Responsive Application template__ and give the design a name ApplicationDesign.
 
-_Starting point from responsive template_  
+__Your design from the template should look like this__
 ![Starting point from responsive template](https://cloud.githubusercontent.com/assets/1398470/10730425/86d938de-7bf8-11e5-8650-7a841071718d.png)
 
 Beautiful buttons
 -----------------
-Remove the blue menuTitle HorizontalLayout having the text ‘The Application’. Select the top most button userButton and change its style from the properties panel. Clear the value of PrimaryStyleName property and set the StyleName property value with opening style editor ![property editor button](https://cloud.githubusercontent.com/assets/1398470/10730428/8b182eaa-7bf8-11e5-9735-859c9d878d1d.png). From ValoTheme add styles `BUTTON_BORDERLESS` and `BUTTON_ICON_ALIGN_TOP`. Click OK to close the style editor. As you can see the button style changed and the button StyleName property has value ‘borderless icon-align-top’. Sometimes it’s faster just to write the style name instead of using the style editor, if you remember the style name that is.
+* Remove the blue menuTitle HorizontalLayout having the text ‘The Application’.
+* Select the top most button userButton and change its style from the properties panel. 
+  * Clear the value of PrimaryStyleName property and set the StyleName property value with opening style editor ![property editor button](https://cloud.githubusercontent.com/assets/1398470/10730428/8b182eaa-7bf8-11e5-9735-859c9d878d1d.png). 
+  * From ValoTheme add styles `BUTTON_BORDERLESS` and `BUTTON_ICON_ALIGN_TOP`. 
+  * Click OK to close the style editor.
 
-Next change the userButton height to 150px, change its caption to Compose, and change the name of it from userButton to composeButton. Also change the button icon with icon editor. Select Font Icons tab and select icon called `EDIT`.
+As you can see the button style changed and the button StyleName property has value ‘borderless icon-align-top’. Sometimes it’s faster just to write the style name instead of using the style editor, if you remember the style name that is.
+
+* Modify the userButton
+  * Set the height to 150px.
+  * Change its caption to Compose.
+  * Change its name to composeButton. 
+  * Give a new icon with icon editor. Select Font Icons tab and select icon called `EDIT`.
 
 The inbox button is ok and can be moved below the composeButton. The rest of the buttons you need to change the name, caption, and icon properties. The template doesn’t contain enough buttons, so you need to add a couple. Easiest is to copy one of the buttons and paste it a couple of times. To get the little number badge by the button caption you need to set HtmlContentAllowed checkbox and set the button caption to contain an Html snippet e.g. `<span class=”valo-menu-badge”>99+</span>`.
 
 ![Icon FILES_O](https://cloud.githubusercontent.com/assets/1398470/10730429/8ea45c56-7bf8-11e5-81a2-2a975f14fef2.png) FILES_O, ![Icon PAPER_PLANE](https://cloud.githubusercontent.com/assets/1398470/10730431/911a5b52-7bf8-11e5-824a-f3d58cd72e9d.png) PAPER_PLANE, ![Icon EXCLAMATION](https://cloud.githubusercontent.com/assets/1398470/10730434/92742bcc-7bf8-11e5-9506-09ac57da1d29.png) EXCLAMATION, ![Icon TRASH_O](https://cloud.githubusercontent.com/assets/1398470/10730438/95749ac8-7bf8-11e5-9583-cbc404beca5c.png) TRASH_O,  ![Icon FLAG](https://cloud.githubusercontent.com/assets/1398470/10730439/976f3a86-7bf8-11e5-82ee-1dd179ffaefa.png) FLAG.
 
-_Buttons made a bit better_  
+__At this point your application should look like this__  
 ![Buttons made a bit better](https://cloud.githubusercontent.com/assets/1398470/10730445/9fc418dc-7bf8-11e5-9127-9d325c71a149.png)
 
 The left side menu looks already quite nice, but you need to style it up a bit to get it look more like the UI mockup. You need to add the styles to your theme scss file. Remember that any Valo variables need to be set before valo.scss is imported. All the other style definitions go inside your theme mixin.
 
-Change the color of the menu background: `$valo-menu-background-color: #433;`
-
-Change the menu badge roundness: `$v-border-radius: 10px;`
+* Change the color of the menu background: `$valo-menu-background-color: #433;`
+* Change the menu badge roundness: `$v-border-radius: 10px;`
 
 Make the menu wider when the layout is in the “desktop” mode. Add a responsive extension CSS “breakpoint”. The topic of responsive layouts is out of scope, but if you are interested check out Book of Vaadin chapter about it: https://vaadin.com/book/-/page/themes.responsive.html.
 ```css
@@ -87,7 +97,7 @@ And finally make the compose button more dominant. Add another StyleName called 
   }
 }
 ```  
-_Beautiful buttons_  
+__With correctly styled buttons your application should look like this__  
 ![Beautiful buttons](https://cloud.githubusercontent.com/assets/1398470/10730446/a2f026f4-7bf8-11e5-9484-789606745fbd.png)
 
 Toolbar
@@ -159,7 +169,7 @@ To get the message title and content to behave even if they don’t fit in the g
 ```
 Finally enable the right side margin of the message content VerticalLayout from the properties. Individual margins can be enabled using the margin editor, just click
 
-_Message design ready_  
+__Completed message item design__  
 ![Message design ready](https://cloud.githubusercontent.com/assets/1398470/10730449/aa87145e-7bf8-11e5-9b53-b128a4615c8f.png)
 
 As the final steps in implementing the message component. You need to create a new design. Name it MessageDesign and use the blank template. Then copy-paste the whole message layout to your new design. At the time of writing this, there is a limitation in Designer, which prevents you pasting to a blank design in the visual view. You need to switch to the source mode and paste your content in between the body elements.
@@ -181,4 +191,5 @@ Final result
 ------------
 The final result looks quite nice. You started from a basic responsive application template and took some simple steps to modify the design to look like the design mockup. First you modified the left side menu to have correct buttons and styled the compose button to be more dominant. Then you implemented rest of the application layout to contain a toolbar and a scrollable message list. Finally you created a message component to be used dynamically in your Java code. After these steps your design should look more or less like in the image below. Great job!
 
+__Finished application__<br/>
 ![Final result](https://cloud.githubusercontent.com/assets/1398470/10730450/ad4dae46-7bf8-11e5-9dd2-a00dda94b1cd.png)
