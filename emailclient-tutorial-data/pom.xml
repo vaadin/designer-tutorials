@@ -48,21 +48,6 @@
 	</dependencyManagement>
 
 	<dependencies>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-cdi</artifactId>
-            <version>1.0.3</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>deltaspike-core-api</artifactId>
-                    <groupId>org.apache.deltaspike.core</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>deltaspike-core-impl</artifactId>
-                    <groupId>org.apache.deltaspike.core</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
@@ -74,6 +59,18 @@
             <artifactId>javaee-web-api</artifactId>    
             <version>7.0</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.deltaspike.modules</groupId>
+            <artifactId>deltaspike-data-module-api</artifactId>
+            <version>${deltaspike.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.deltaspike.modules</groupId>
+            <artifactId>deltaspike-data-module-impl</artifactId>
+            <version>${deltaspike.version}</version>
+            <scope>runtime</scope>
         </dependency>
 		<dependency>
 			<groupId>com.vaadin</groupId>
@@ -92,28 +89,9 @@
 			<artifactId>vaadin-themes</artifactId>
 		</dependency>
         <dependency>
-            <groupId>org.apache.deltaspike.modules</groupId>
-            <artifactId>deltaspike-jpa-module-api</artifactId>
-            <version>${deltaspike.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.deltaspike.modules</groupId>
-            <artifactId>deltaspike-jpa-module-impl</artifactId>
-            <version>${deltaspike.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-                <dependency>
-            <groupId>org.apache.deltaspike.modules</groupId>
-            <artifactId>deltaspike-data-module-api</artifactId>
-            <version>${deltaspike.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.deltaspike.modules</groupId>
-            <artifactId>deltaspike-data-module-impl</artifactId>
-            <version>${deltaspike.version}</version>
-            <scope>runtime</scope>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-cdi</artifactId>
+            <version>1.0.3</version>
         </dependency>
 	</dependencies>
 

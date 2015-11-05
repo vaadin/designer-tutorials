@@ -12,6 +12,11 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * View listing messages fetched through MessageFacade. Also handles message
+ * clicks to mark them as read.
+ *
+ */
 @CDIView(supportsParameters = true, value = FolderView.VIEW_NAME)
 public class FolderView extends VerticalLayout implements View {
 

@@ -38,12 +38,12 @@ public class MessageFacade {
         return new ArrayList<>();
     }
 
-    public long countUnread() {
+    public long countAllUnread() {
         return repository.findByRead(false).count();
     }
 
-    public long countFlagged() {
-        return repository.findByFlagIsNotNull().count();
+    public long countFlaggedUnread() {
+        return repository.findByFlagIsNotNullAndRead(false).count();
     }
 
     public void save(Message message) {

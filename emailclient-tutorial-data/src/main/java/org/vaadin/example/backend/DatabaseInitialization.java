@@ -43,7 +43,7 @@ public class DatabaseInitialization {
                 LocalDateTime.of(2015, 10, 13, 17, 50),
                 "Once again Vaadin packs up for the upcoming JavaOne 2015 and heads to San Francisco, US. JavaOne is ‘the event’ for Java enthusiasts, "
                         + "where one can hear the best speakers, get insights into the future of Java, and connect with other members of the Java community.",
-                true, null);
+                false, Flag.FLAG_STAR);
     }
 
     private Message createMessage(String sender, String subject,

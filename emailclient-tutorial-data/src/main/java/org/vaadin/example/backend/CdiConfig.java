@@ -11,5 +11,4 @@ public class CdiConfig {
     @Dependent
     @PersistenceContext(unitName = "tutorialdb")
     public EntityManager entityManager;
-
 }

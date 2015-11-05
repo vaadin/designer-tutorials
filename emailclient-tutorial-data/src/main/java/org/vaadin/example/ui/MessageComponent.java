@@ -15,12 +15,13 @@ import com.vaadin.server.FontAwesome;
 /**
  * This is the place to implement component logic for MessageDesign. The super
  * class should not be edited, because Vaadin Designer overwrites it.
+ * 
  */
 public class MessageComponent extends MessageDesign {
 
     private static final List<String> MESSAGE_STYLES = Collections
             .unmodifiableList(Arrays.asList(MyTheme.INDICATOR_CIRCLE,
-                    MyTheme.INDICATOR_STAR));
+                    MyTheme.INDICATOR_STAR_RED));
 
     public MessageComponent(Message message,
             Optional<Consumer<ClickEvent<MessageComponent, Message>>> messageClicked) {
@@ -37,14 +38,14 @@ public class MessageComponent extends MessageDesign {
     public void setIndicator(boolean read, Flag flag) {
         MESSAGE_STYLES.forEach(this::removeStyleName);
         indicatorButton.setIcon(null);
-        if (!read) {
+        if (flag == Flag.FLAG_STAR) {
+            indicatorButton.setIcon(FontAwesome.STAR);
+            if (!read) {
+                indicatorButton.addStyleName(MyTheme.INDICATOR_STAR_RED);
+            }
+        } else if (!read) {
             indicatorButton.setIcon(FontAwesome.CIRCLE);
             indicatorButton.addStyleName(MyTheme.INDICATOR_CIRCLE);
-        } else if (flag != null) {
-            if (flag == Flag.FLAG_STAR) {
-                indicatorButton.setIcon(FontAwesome.STAR);
-                indicatorButton.addStyleName(MyTheme.INDICATOR_STAR);
-            }
         }
     }
 
