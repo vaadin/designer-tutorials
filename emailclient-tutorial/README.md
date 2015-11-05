@@ -1,16 +1,12 @@
 Vaadin Designer demo: email client
 ==================================
-This project contains the final result of this tutorial. You can fork this project and see the result yourself or you can start from scratch and try to get to the same result.
+If you just want to see the end result, can fork this project and run the code yourself. However, I recommend starting from scratch and going through all the steps yourself.
 
 In the following tutorial you will build a bit more extensive application UI than in some of the earlier tutorials. This tutorial familiarizes you with the different features of [Vaadin Designer](https://vaadin.com/designer) and gives you ideas of how the tool can be used more effectively. The tutorial is based on a video, where Marc and Ville from Vaadin demonstrate how Vaadin Designer can be used to create a substantial application from an existing design.
 
 [![Vaadin Designer demonstration](https://cloud.githubusercontent.com/assets/1398470/10881298/3b1b49ba-816a-11e5-812f-873f4ae5e953.png)](https://www.youtube.com/watch?v=-6Ix8WHgD6g "Vaadin Designer demonstration")
 
 In the video they use a design from a site called www.100daysui.com where Paul Flavius Nechita made a UI design per day. The design for day [#38](https://dribbble.com/shots/2181203-Day-038-Email-Client/attachments/402034) was a mockup of an email client. This tutorial breaks down the steps in the video to help you follow the same workflow. Let’s see how close we can get to the design with only a little effort.
-
-The really quick version
-------------------------
-For the impatient ones, there is a Maven [project](https://github.com/johannesh2/designer-tutorials/tree/master/emailclient-tutorial) in GitHub. However, I recommend starting from scratch and going through all the steps yourself.
 
 Start by creating a project
 ---------------------------
