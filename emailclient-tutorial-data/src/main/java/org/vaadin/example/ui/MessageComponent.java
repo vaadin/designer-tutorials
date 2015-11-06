@@ -3,7 +3,6 @@ package org.vaadin.example.ui;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Consumer;
 
 import org.vaadin.example.backend.Message;
@@ -24,13 +23,13 @@ public class MessageComponent extends MessageDesign {
                     MyTheme.INDICATOR_STAR_RED));
 
     public MessageComponent(Message message,
-            Optional<Consumer<ClickEvent<MessageComponent, Message>>> messageClicked) {
+            Consumer<ClickEvent<MessageComponent, Message>> messageClicked) {
         senderLabel.setValue(message.getSender());
         messageLabel.setCaption(message.getSubject());
         messageLabel.setValue(message.getBody());
 
-        addLayoutClickListener(event -> messageClicked.ifPresent(
-                consumer -> consumer.accept(new ClickEvent<>(this, message))));
+        addLayoutClickListener(event -> messageClicked
+                .accept(new ClickEvent<>(this, message)));
 
         setIndicator(message.isRead(), message.getFlag());
     }

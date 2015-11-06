@@ -1,7 +1,5 @@
 package org.vaadin.example.ui;
 
-import java.util.Optional;
-
 import javax.inject.Inject;
 
 import org.vaadin.example.backend.Message;
@@ -33,7 +31,6 @@ public class FolderView extends VerticalLayout implements View {
 
     @Override
     public void enter(ViewChangeEvent event) {
-        // handle view
         String folder = event.getParameters();
         if (MessageFacade.FOLDERS.contains(folder)) {
             folderSelectEvent.fire(new FolderSelectEvent(folder));
@@ -43,13 +40,13 @@ public class FolderView extends VerticalLayout implements View {
 
     private void refreshFolder(String folder) {
         removeAllComponents();
-        messageFacade.findAllByFolder(folder).stream()
+        messageFacade.getFolderMessages(folder).stream()
                 .map(this::createFromEntity).forEach(this::addComponent);
     }
 
     private MessageComponent createFromEntity(Message entity) {
-        MessageComponent msg = new MessageComponent(entity, Optional.of(
-                event -> onMessageClicked(event.getSource(), event.getData())));
+        MessageComponent msg = new MessageComponent(entity,
+                event -> onMessageClicked(event.getSource(), event.getData()));
         return msg;
     }
 

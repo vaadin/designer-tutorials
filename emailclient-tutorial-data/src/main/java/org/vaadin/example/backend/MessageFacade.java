@@ -23,11 +23,7 @@ public class MessageFacade {
     @Inject
     private MessageRepository repository;
 
-    public List<Message> findAll() {
-        return repository.findAll();
-    }
-
-    public List<Message> findAllByFolder(String folder) {
+    public List<Message> getFolderMessages(String folder) {
         if (FOLDERS.contains(folder)) {
             if (folder.equals(FOLDER_INBOX)) {
                 return repository.findAll();
