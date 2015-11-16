@@ -24,16 +24,12 @@ public class FolderView extends VerticalLayout implements View {
     private MessageFacade messageFacade;
 
     @Inject
-    javax.enterprise.event.Event<FolderSelectEvent> folderSelectEvent;
-
-    @Inject
     javax.enterprise.event.Event<MessageModifiedEvent> messageSelectEvent;
 
     @Override
     public void enter(ViewChangeEvent event) {
         String folder = event.getParameters();
         if (MessageFacade.FOLDERS.contains(folder)) {
-            folderSelectEvent.fire(new FolderSelectEvent(folder));
             refreshFolder(folder);
         }
     }
@@ -46,7 +42,7 @@ public class FolderView extends VerticalLayout implements View {
 
     private MessageComponent createFromEntity(Message entity) {
         MessageComponent msg = new MessageComponent(entity,
-                event -> onMessageClicked(event.getSource(), event.getData()));
+                this::onMessageClicked);
         return msg;
     }
 

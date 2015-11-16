@@ -36,6 +36,7 @@ public class MessageFacade {
 
     public long countAllUnread() {
         return repository.findByRead(false).count();
+
     }
 
     public long countFlaggedUnread() {
