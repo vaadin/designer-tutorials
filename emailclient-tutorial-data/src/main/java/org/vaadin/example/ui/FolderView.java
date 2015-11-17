@@ -29,9 +29,7 @@ public class FolderView extends VerticalLayout implements View {
     @Override
     public void enter(ViewChangeEvent event) {
         String folder = event.getParameters();
-        if (MessageFacade.FOLDERS.contains(folder)) {
-            refreshFolder(folder);
-        }
+        refreshFolder(folder);
     }
 
     private void refreshFolder(String folder) {

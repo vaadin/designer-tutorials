@@ -1,9 +1,5 @@
 package org.vaadin.example.ui;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 import org.vaadin.example.backend.Message;
 import org.vaadin.example.backend.Message.Flag;
 import org.vaadin.example.ui.themes.mytheme.MyTheme;
@@ -17,10 +13,6 @@ import com.vaadin.server.FontAwesome;
  */
 public class MessageComponent extends MessageDesign {
 
-    private static final List<String> MESSAGE_STYLES = Collections
-            .unmodifiableList(Arrays.asList(MyTheme.INDICATOR_CIRCLE,
-                    MyTheme.INDICATOR_STAR_RED));
-
     public MessageComponent(Message message,
             MessageClickListener clickListener) {
         senderLabel.setValue(message.getSender());
@@ -33,7 +25,7 @@ public class MessageComponent extends MessageDesign {
     }
 
     public void setIndicator(boolean read, Flag flag) {
-        MESSAGE_STYLES.forEach(indicatorButton::removeStyleName);
+        MyTheme.MESSAGE_STYLES.forEach(indicatorButton::removeStyleName);
         indicatorButton.setIcon(null);
         if (flag == Flag.FLAG_STAR) {
             indicatorButton.setIcon(FontAwesome.STAR);

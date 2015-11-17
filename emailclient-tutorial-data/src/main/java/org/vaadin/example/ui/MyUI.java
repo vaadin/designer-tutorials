@@ -50,9 +50,7 @@ public class MyUI extends UI {
             @Override
             public void afterViewChange(ViewChangeEvent event) {
                 String folder = event.getParameters();
-                if (MessageFacade.FOLDERS.contains(folder)) {
-                    mainLayout.setSelectedFolder(folder);
-                }
+                mainLayout.setSelectedFolder(folder);
             }
         });
 
