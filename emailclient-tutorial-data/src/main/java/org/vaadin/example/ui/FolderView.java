@@ -2,13 +2,14 @@ package org.vaadin.example.ui;
 
 import javax.inject.Inject;
 
-import org.vaadin.example.backend.Message;
 import org.vaadin.example.backend.MessageFacade;
 
 import com.vaadin.cdi.CDIView;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.themes.ValoTheme;
 
 /**
  * View listing messages fetched through MessageFacade. Also handles message
@@ -34,23 +35,8 @@ public class FolderView extends VerticalLayout implements View {
 
     private void refreshFolder(String folder) {
         removeAllComponents();
-        messageFacade.getFolderMessages(folder).stream()
-                .map(this::createFromEntity).forEach(this::addComponent);
+        Label todo = new Label("TODO implement listing of messages");
+        todo.setStyleName(ValoTheme.LABEL_LARGE);
+        addComponent(todo);
     }
-
-    private MessageComponent createFromEntity(Message entity) {
-        MessageComponent msg = new MessageComponent(entity,
-                this::onMessageClicked);
-        return msg;
-    }
-
-    private void onMessageClicked(MessageComponent source, Message message) {
-        if (!message.isRead()) {
-            message.setRead(true);
-            messageFacade.save(message);
-            source.setIndicator(true, message.getFlag());
-        }
-        messageSelectEvent.fire(new MessageModifiedEvent(message));
-    }
-
 }
