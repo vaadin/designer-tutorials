@@ -41,7 +41,7 @@ public class CdiConfig {
 ----
 
 === Entity
-In this simple example you only need a single JPA entity, which represents the listed message. An abstract entity here is a base class containing version and id fields.
+In this simple example you only need a single JPA entity, which represents the listed message. An AbstractEntity here is a base class containing version and id fields.
 
 [source, java]
 ----
@@ -102,22 +102,22 @@ public class MessageFacade {
 ----
 
 == UI views and navigation
-The starting point project already contains a bunch of UI logic and a couple of Vaadin Designer design files e.g. the folder navigation works both by clicking from the UI and navigating using URL. There is also a logic to updating the unread messages count in the menu item badges on the left side. This implementation is out of scope of the tutorial and we can focus on the list of messages in the FolderView, but I still want to describe a bit what is happening in the UI.
+The starting point project already contains a bunch of UI logic and a couple of Vaadin Designer design files e.g. the folder navigation works both by clicking from the UI and navigating using a URL. There is also a logic to updating the unread messages count in the menu item badges on the left side. This implementation is out of scope of the tutorial and we can focus on the list of messages in the FolderView, but I still want to describe a bit what is happening in the UI.
 
-MyUI is annotated with @CDIUI coming from Vaadin CDI. It sets up a Navigator and uses CDIViewProvider with navigator. CDViewProvider understands @CDIView annotated views. MyUI also defines a ServletContextListener to initialize test data.
+MyUI is annotated with `@CDIUI` coming from Vaadin CDI. It sets up a Navigator and uses CDIViewProvider with navigator. CDViewProvider understands `@CDIView` annotated views. MyUI also defines a ServletContextListener to initialize test data.
 
 MainLayout is extending MainLayoutDesign which is the content of our UI, having a menu on the left side and a toolbar on the top. The lower right area is the view content area for Navigator. MainLayout has a bunch of boiler-plate code to manage the button selected style, click events, formatting Valo themed menu items etc. You should take a look at it just maybe out of curiosity, but it’s not necessary for this tutorial.
 
-FolderView is simply extending VerticalLayout and implements com.vaadin.navigator.View. It is annotated with @CDIView and uses view parameters to communicate which folder is the currently selected one and based on that parameter we can fetch the appropriate messages from the backend and display them. For each of the folders, we are using the same view class just because the content of the views is the same apart from the dynamic list of messages.
+FolderView is simply extending VerticalLayout and implements com.vaadin.navigator.View. It is annotated with `@CDIView` and uses view parameters to communicate which folder is the currently selected one and based on that parameter we can fetch the appropriate messages from the backend and display them. For each of the folders, we are using the same view class just because the content of the views is the same apart from the dynamic list of messages.
 
 MessageModifiedEvent is a CDI event we use later on in the tutorial.
 
-It’s worth mentioning that the application uses a custom theme. There’s not much style definitions in the mytheme.scss, but some sizing, alignment, colors, and such. The style names needed for this tutorial are available in MyTheme.java.
+It’s worth mentioning that the application uses a custom theme. There’s not much style definitions in the `mytheme.scss`, but some sizing, alignment, colors, and such. The style names needed for this tutorial are available in link:https://github.com/vaadin/designer-tutorials/blob/master/emailclient-tutorial-data/src/main/java/org/vaadin/example/ui/themes/mytheme/MyTheme.java[`MyTheme.java`].
 
 MessageDesign is the still a bit static message UI component you should use in message listing.
 
 == Let’s get coding!
-Let’s add some functionality to this currently a bit dumb application. When the user selects a message folder, the list of messages should be shown. Also, when the user clicks a message that is marked as unread it should be marked as read. The message should display the unread status by showing a colored indicator. 
+Let’s add some functionality to this currently a somewhat dumb application. When the user selects a message folder, the list of messages should be shown. Also, when the user clicks a message that is marked as unread it should be marked as read. The message should display the unread status by showing a colored indicator. 
 
 === Show list of messages
 Message facade has methods to provide list messages when a folder is selected. You should fetch the list of messages in FolderView#enter() and then replace the static content of MessageDesign with real data and finally populate the FolderView UI with the fetched messages.
@@ -141,17 +141,17 @@ public class MessageComponent extends MessageDesign {
 
 [source, java]
 ----
-    @Override
-    public void enter(ViewChangeEvent event) {
-        String folder = event.getParameters();
-        refreshFolder(folder);
-    }
+@Override
+public void enter(ViewChangeEvent event) {
+    String folder = event.getParameters();
+    refreshFolder(folder);
+}
 
-    private void refreshFolder(String folder) {
-        removeAllComponents();
-        messageFacade.getFolderMessages(folder).stream()
-                .map(MessageComponent::new).forEach(this::addComponent);
-    }
+private void refreshFolder(String folder) {
+    removeAllComponents();
+    messageFacade.getFolderMessages(folder).stream()
+            .map(MessageComponent::new).forEach(this::addComponent);
+}
 ----
 
 Ok, so now the message listing is working, but the message unread indicator is not colored for the unread messages
@@ -163,23 +163,23 @@ and all the messages have the same indicator icon. Let’s fix that.
 
 [source, java]
 ----
-    public void setIndicator(boolean read, Flag flag) {
-        MyTheme.MESSAGE_STYLES.forEach(indicatorButton::removeStyleName);
-        indicatorButton.setIcon(null);
-        if (flag == Flag.FLAG_STAR) {
-            indicatorButton.setIcon(FontAwesome.STAR);
-            if (!read) {
-                indicatorButton.addStyleName(MyTheme.INDICATOR_STAR_RED);
-            }
-        } else if (!read) {
-            indicatorButton.setIcon(FontAwesome.CIRCLE);
-            indicatorButton.addStyleName(MyTheme.INDICATOR_CIRCLE);
+public void setIndicator(boolean read, Flag flag) {
+    MyTheme.MESSAGE_STYLES.forEach(indicatorButton::removeStyleName);
+    indicatorButton.setIcon(null);
+    if (flag == Flag.FLAG_STAR) {
+        indicatorButton.setIcon(FontAwesome.STAR);
+        if (!read) {
+            indicatorButton.addStyleName(MyTheme.INDICATOR_STAR_RED);
         }
+    } else if (!read) {
+        indicatorButton.setIcon(FontAwesome.CIRCLE);
+        indicatorButton.addStyleName(MyTheme.INDICATOR_CIRCLE);
     }
+}
 ----
 
 - Call setIndicator in MessageComponent constructor +
-setIndicator(message.isRead(), message.getFlag());
+`setIndicator(message.isRead(), message.getFlag())`;
 
 === Marking messages as read
 .Let’s add a support for marking messages as read. This requires you to:
@@ -196,43 +196,43 @@ define a functional interface MessageClickListener.
 
 [source, java]
 ----
-    @FunctionalInterface
-    interface MessageClickListener {
-        public void messageClick(MessageComponent source, Message message);
-    }
+@FunctionalInterface
+interface MessageClickListener {
+    public void messageClick(MessageComponent source, Message message);
+}
 ----
 
 Add MessageClickListener parameter to the constructor and call the listener in LayoutClickListener.
 
 [source, java]
 ----
-    public MessageComponent(Message message,
-            MessageClickListener clickListener) {
-        // … 
-        addLayoutClickListener(
-                event -> clickListener.messageClick(this, message));
-    }
+public MessageComponent(Message message,
+        MessageClickListener clickListener) {
+    // … 
+    addLayoutClickListener(
+            event -> clickListener.messageClick(this, message));
+}
 ----
 
 - Fix the FolderView message population to include this new MessageClickListener. So instead of 
-MessageComponent::new call this::createFromEntity.
+`MessageComponent::new` call `this::createFromEntity`.
 
 [source, java]
 ----
-    private void refreshFolder(String folder) {
-        removeAllComponents();
-        messageFacade.getFolderMessages(folder).stream()
-                .map(this::createFromEntity).forEach(this::addComponent);
-    }
+private void refreshFolder(String folder) {
+    removeAllComponents();
+    messageFacade.getFolderMessages(folder).stream()
+            .map(this::createFromEntity).forEach(this::addComponent);
+}
 
-    private MessageComponent createFromEntity(Message entity) {
-        MessageComponent msg = new MessageComponent(entity,
-                this::onMessageClicked);
-        return msg;
-    }
+private MessageComponent createFromEntity(Message entity) {
+    MessageComponent msg = new MessageComponent(entity,
+            this::onMessageClicked);
+    return msg;
+}
 
-    private void onMessageClicked(MessageComponent source, Message message) {
-    }
+private void onMessageClicked(MessageComponent source, Message message) {
+}
 ----
 
 .Now the FolderView consumes the click event and you can modify the message.
@@ -241,13 +241,13 @@ MessageComponent::new call this::createFromEntity.
 
 [source, java]
 ----
-    private void onMessageClicked(MessageComponent source, Message message) {
-        if (!message.isRead()) {
-            message.setRead(true);
-            messageFacade.save(message);
-            source.setIndicator(true, message.getFlag());
-        }
+private void onMessageClicked(MessageComponent source, Message message) {
+    if (!message.isRead()) {
+        message.setRead(true);
+        messageFacade.save(message);
+        source.setIndicator(true, message.getFlag());
     }
+}
 ----
 
 As an added bonus the message folder badge on the left side menu should update right away so fire a CDI event called 
