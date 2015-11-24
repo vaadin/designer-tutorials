@@ -1,3 +1,5 @@
+`This tutorial is written using Java 8`
+
 Building a comprehensive UI from scratch with Vaadin Designer
 ==================================
 If you just want to see the end result, can fork this project and run the code yourself. However, I recommend starting from scratch and going through all the steps yourself.

@@ -1,3 +1,5 @@
+`This tutorial is written using Java 8`
+
 simplenavi
 ==============
 
