@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="UTF-8" name="design-properties" content="{&quot;RULERS_VISIBLE&quot;:true,&quot;GUIDELINES_VISIBLE&quot;:false,&quot;SNAP_TO_OBJECTS&quot;:true,&quot;SNAP_TO_GRID&quot;:true,&quot;SNAPPING_DISTANCE&quot;:10,&quot;JAVA_SOURCES_ROOT&quot;:&quot;src/main/java&quot;,&quot;THEME&quot;:&quot;mytheme&quot;}">
+ </head> 
+ <body> 
+  <vaadin-horizontal-layout style-name="valo-menu-responsive" responsive="true" id="responsive-application-template" size-full="true"> 
+   <vaadin-css-layout style-name="valo-menu"> 
+    <vaadin-css-layout style-name="valo-menu-part"> 
+     <vaadin-button icon="fonticon://FontAwesome/f03a" style-name="primary small valo-menu-toggle" plain-text="" _id="menuToggle">
+       Menu 
+     </vaadin-button> 
+     <vaadin-css-layout style-name="valo-menuitems" _id="menuItems"> 
+      <vaadin-button icon="fonticon://FontAwesome/f044" style-name="compose borderless icon-align-top" width-full="true" height="150px" plain-text="" _id="composeButton">
+        Compose 
+      </vaadin-button> 
+      <vaadin-button icon="fonticon://FontAwesome/f01c" primary-style-name="valo-menu-item" _id="inboxButton">
+        Inbox 
+       <span class="valo-menu-badge">7</span> 
+      </vaadin-button> 
+      <vaadin-button icon="fonticon://FontAwesome/f0c5" primary-style-name="valo-menu-item" _id="draftsButton">
+        Drafts 
+      </vaadin-button> 
+      <vaadin-button icon="fonticon://FontAwesome/f1d8" primary-style-name="valo-menu-item" _id="sentButton">
+        Sent 
+      </vaadin-button> 
+      <vaadin-button icon="fonticon://FontAwesome/f12a" primary-style-name="valo-menu-item" plain-text="" _id="junkButton">
+        Junk 
+      </vaadin-button> 
+      <vaadin-button icon="fonticon://FontAwesome/f014" primary-style-name="valo-menu-item" _id="trashButton">
+        Trash 
+       <span class="valo-menu-badge">99+</span> 
+      </vaadin-button> 
+      <vaadin-button icon="fonticon://FontAwesome/f024" primary-style-name="valo-menu-item" _id="flaggedButton">
+        Flagged 
+       <span class="valo-menu-badge">2</span> 
+      </vaadin-button> 
+     </vaadin-css-layout> 
+    </vaadin-css-layout> 
+   </vaadin-css-layout> 
+   <vaadin-vertical-layout size-full="true" _id="content" :expand=""> 
+    <vaadin-horizontal-layout style-name="header" spacing="true" width-full="true" margin="true"> 
+     <vaadin-label size-auto="true" plain-text="" :middle="" :center="">
+       Sort by: 
+     </vaadin-label> 
+     <vaadin-combo-box item-caption-mode="id" width="150px" _id="sortCombo" :expand=""> 
+      <option>Option 1</option> 
+      <option>Option 2</option> 
+      <option>Option 3</option> 
+     </vaadin-combo-box> 
+     <vaadin-button icon="fonticon://FontAwesome/f00d" plain-text="" _id="deleteButton"></vaadin-button> 
+     <vaadin-css-layout style-name="v-component-group"> 
+      <vaadin-button icon="fonticon://FontAwesome/f112" plain-text="" _id="replyButton"></vaadin-button> 
+      <vaadin-button icon="fonticon://FontAwesome/f122" plain-text="" _id="replyAllButton"></vaadin-button> 
+      <vaadin-button icon="fonticon://FontAwesome/f064" plain-text="" _id="forwardButton"></vaadin-button> 
+     </vaadin-css-layout> 
+     <vaadin-combo-box item-caption-mode="id" width="80px" _id="flagCombo"> 
+      <option>Option 1</option> 
+      <option>Option 2</option> 
+      <option>Option 3</option> 
+     </vaadin-combo-box> 
+    </vaadin-horizontal-layout> 
+    <vaadin-panel style-name="borderless" size-full="true" _id="messagePanel" :expand=""> 
+     <vaadin-vertical-layout spacing="true" _id="messageList"></vaadin-vertical-layout> 
+    </vaadin-panel> 
+   </vaadin-vertical-layout> 
+  </vaadin-horizontal-layout>  
+ </body>
+</html>

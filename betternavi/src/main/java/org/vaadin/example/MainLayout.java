@@ -22,8 +22,6 @@ public class MainLayout extends MainLayoutDesign implements ViewDisplay {
         addNavigatorView(AboutView.VIEW_NAME, AboutView.class, menuButton3);
         if (navigator.getState().isEmpty()) {
             navigator.navigateTo(DashboardView.VIEW_NAME);
-        } else {
-            navigator.navigateTo(navigator.getState());
         }
     }
 

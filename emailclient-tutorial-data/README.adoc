@@ -1,0 +1,281 @@
+= Connecting your designs to data
+
+In the following tutorial I’ll show you how you can connect your Vaadin Designer based views to a real database backend
+with only a few steps. The sample code in this tutorial is based on a previous link:https://github.com/vaadin/designer-tutorials/tree/master/emailclient-tutorial[one] where I demonstrated building a design
+of an email client. Now we’ll add fetching message entities from a real database and writing some modifications
+back to the database. The data access is done through a stateless EJB accessing a JPA repository.
+The repository is implemented using Apache link:https://deltaspike.apache.org/documentation/[DeltaSpike].
+
+image::https://raw.githubusercontent.com/vaadin/designer-tutorials/develop/emailclient-tutorial-data/tutorial-images/email-client-with-data.png[Screenshot]
+
+I assume you have installed link:https://vaadin.com/designer[Vaadin Designer] and you are using Eclipse. In this tutorial I used
+
+- Java 8 and Java EE 7 Web Specification APIs
+- Eclipse Mars R1
+- Vaadin 7.5.8
+- Designer 1.0.1
+- Java EE 7 container e.g. Wildfly 9.
+
+== For the impatient one
+If you just want to see the end result and the completed code and don’t feel like doing it yourself, you can get the end result from link:https://github.com/vaadin/designer-tutorials/tree/master/emailclient-tutorial-data[here]. However, I would recommend going through all the steps yourself.
+
+== Quick start
+The key point in this tutorial is to show you how to connect your designs to data, and as I want to keep this tutorial as short as possible, I’ve implemented the data part and the UI designs for you. Just fork or clone link:https://github.com/vaadin/designer-tutorials/tree/emailclient-tutorial-data-start/emailclient-tutorial-data[this] repository and you are almost good to go. 
+
+`git clone \https://github.com/vaadin/designer-tutorials.git`
+
+What you need, in addition to the code, is: *Eclipse (Luna or newer)*, *Vaadin Designer*, and *Java EE 7* compatible container (e.g. Wildfly 9). The project is a Maven project and has been created using `vaadin-archetype-application`. The project pom has all the necessary dependencies like `deltaspike-data-module-api`, `javaee-web-api`, etc. The project also uses a Vaadin CDI add-on to allow using our UI components as CDI managed beans and to easily inject the data source.
+
+Import the project into Eclipse using `File > Import... > Existing Maven Projects`. Select the emailclient-tutorial-data directory as the root directory of your project.
+
+== The backend
+*The backend is already done in the project, so you don’t have to do the following steps. This is here just for your information.*
+
+A simple and safe way to do the data access is through a stateless EJB facade accessing repositories. With the stateless bean you get the thread-safety and instance pooling by the container. To the Facade you can inject your repository. Using an EJB means that the transaction boundary should be in the EJB level and not in the JPA level. For that reason you need to put `apache-deltaspike.properties` file in `src/main/resources/META-INF` and define the transcation strategy to be container managed JTA transactions. 
+
+`globalAlternatives.org.apache.deltaspike.jpa.spi.transaction.TransactionStrategy=org.apache.deltaspike.jpa.impl.transaction.ContainerManagedTransactionStrategy`
+
+Another necessary step is to expose the EntityManager to the DeltaSpike Data module. This is done via CDI producer.
+
+[source, java]
+----
+public class CdiConfig {
+
+    @Produces
+    @Dependent
+    @PersistenceContext(unitName = "tutorialdb")
+    public EntityManager entityManager;
+}
+----
+
+=== Entity
+In this simple example you only need a single JPA entity, which represents the listed message. An AbstractEntity here is a base class containing version and id fields.
+
+[source, java]
+----
+@Entity
+public class Message extends AbstractEntity {
+
+    private boolean read;
+    private boolean trashed;
+    private String sender;
+    @Enumerated(EnumType.STRING)
+    private Flag flag;
+
+    public enum Flag {
+        FLAG_STAR
+    }
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date sent;
+    private String subject;
+
+    @Lob
+    private String body;
+
+    // …
+    // getters and setters skipped for brevity
+}
+----
+
+=== Repository
+With DeltaSpike, defining a repository is very simple. In this sample I just extended EntityRepository and added the needed methods. The EntityRepository has already the basic CRUD methods, and I only needed to add my custom methods there. The methods use DeltaSpike’s automatically generated query implementations by naming conventions.
+
+[source, java]
+----
+@Repository
+public interface MessageRepository extends EntityRepository<Message, Long> {
+    QueryResult<Message> findByRead(boolean read);
+
+    QueryResult<Message> findByFlagIsNotNullAndRead(boolean read);
+
+    List<Message> findByFlagIsNotNullAndTrashed(boolean trashed);
+}
+----
+
+=== Facade
+A simple stateless EJB facade accessing repositories. Inject your repository to the facade.
+
+[source, java]
+----
+@Stateless
+public class MessageFacade {
+
+    @Inject
+    private MessageRepository repository;
+
+    // …
+    // business logic and data operations go here
+}
+----
+
+== UI views and navigation
+The starting point project already contains a bunch of UI logic and a couple of Vaadin Designer design files e.g. the folder navigation works both by clicking from the UI and navigating using a URL. There is also a logic to updating the unread messages count in the menu item badges on the left side. This implementation is out of scope of the tutorial and we can focus on the list of messages in the FolderView, but I still want to describe a bit what is happening in the UI.
+
+MyUI is annotated with `@CDIUI` coming from Vaadin CDI. It sets up a Navigator and uses CDIViewProvider with navigator. CDViewProvider understands `@CDIView` annotated views. MyUI also defines a ServletContextListener to initialize test data.
+
+MainLayout is extending MainLayoutDesign which is the content of our UI, having a menu on the left side and a toolbar on the top. The lower right area is the view content area for Navigator. MainLayout has a bunch of boiler-plate code to manage the button selected style, click events, formatting Valo themed menu items etc. You should take a look at it just maybe out of curiosity, but it’s not necessary for this tutorial.
+
+FolderView is simply extending VerticalLayout and implements com.vaadin.navigator.View. It is annotated with `@CDIView` and uses view parameters to communicate which folder is the currently selected one and based on that parameter we can fetch the appropriate messages from the backend and display them. For each of the folders, we are using the same view class just because the content of the views is the same apart from the dynamic list of messages.
+
+MessageModifiedEvent is a CDI event we use later on in the tutorial.
+
+It’s worth mentioning that the application uses a custom theme. There’s not much style definitions in the `mytheme.scss`, but some sizing, alignment, colors, and such. The style names needed for this tutorial are available in link:https://github.com/vaadin/designer-tutorials/blob/master/emailclient-tutorial-data/src/main/java/org/vaadin/example/ui/themes/mytheme/MyTheme.java[`MyTheme.java`].
+
+MessageDesign is the still a bit static message UI component you should use in message listing.
+
+== Let’s get coding!
+Let’s add some functionality to this currently a somewhat dumb application. When the user selects a message folder, the list of messages should be shown. Also, when the user clicks a message that is marked as unread it should be marked as read. The message should display the unread status by showing a colored indicator. 
+
+=== Show list of messages
+Message facade has methods to provide list messages when a folder is selected. You should fetch the list of messages in FolderView#enter() and then replace the static content of MessageDesign with real data and finally populate the FolderView UI with the fetched messages.
+
+- Start by extending MessageDesign and name it MessageComponent.
+- Add a constructor to create it based on Message entity
+- Set the values of appropriate UI components from message properties
+
+[source, java]
+----
+public class MessageComponent extends MessageDesign {
+    public MessageComponent(Message message) {
+        senderLabel.setValue(message.getSender());
+        messageLabel.setCaption(message.getSubject());
+        messageLabel.setValue(message.getBody());
+    }
+}
+----
+
+- In FolderView there is a method named refreshFolders, which is called in FolderView#enter. Fetch messages from MessageFacade and populate the FolderView VerticalLayout.
+
+[source, java]
+----
+@Override
+public void enter(ViewChangeEvent event) {
+    String folder = event.getParameters();
+    refreshFolder(folder);
+}
+
+private void refreshFolder(String folder) {
+    removeAllComponents();
+    messageFacade.getFolderMessages(folder).stream()
+            .map(MessageComponent::new).forEach(this::addComponent);
+}
+----
+
+Ok, so now the message listing is working, but the message unread indicator is not colored for the unread messages
+and all the messages have the same indicator icon. Let’s fix that.
+
+- Flagged messages get a star indicator and unread messages get a circle indicator.
+- Indicators of unread messages get a color.
+- Read non-flagged messages don’t have an indicator at all.
+
+[source, java]
+----
+public void setIndicator(boolean read, Flag flag) {
+    MyTheme.MESSAGE_STYLES.forEach(indicatorButton::removeStyleName);
+    indicatorButton.setIcon(null);
+    if (flag == Flag.FLAG_STAR) {
+        indicatorButton.setIcon(FontAwesome.STAR);
+        if (!read) {
+            indicatorButton.addStyleName(MyTheme.INDICATOR_STAR_RED);
+        }
+    } else if (!read) {
+        indicatorButton.setIcon(FontAwesome.CIRCLE);
+        indicatorButton.addStyleName(MyTheme.INDICATOR_CIRCLE);
+    }
+}
+----
+
+- Call setIndicator in MessageComponent constructor +
+`setIndicator(message.isRead(), message.getFlag())`;
+
+=== Marking messages as read
+.Let’s add a support for marking messages as read. This requires you to:
+- Handle mouse click events in the MessageComponent 
+- Propagate the click event from the message to the FolderView. 
+- In the FolderView set the message as read and save the modifications to the database through MessageFacade. 
+- After the modification transaction is complete, propagate the change to the menu component to refresh
+the folder badges (now the custom CDI event MessageModifiedEvent comes into play).
+
+.Let’s go through this step-by-step:
+- To handle a click event in MessageComponent you can use LayoutClickListener. 
+- From there the click event can be propagated in many ways, but I like Java 8 so let’s
+define a functional interface MessageClickListener.
+
+[source, java]
+----
+@FunctionalInterface
+interface MessageClickListener {
+    public void messageClick(MessageComponent source, Message message);
+}
+----
+
+Add MessageClickListener parameter to the constructor and call the listener in LayoutClickListener.
+
+[source, java]
+----
+public MessageComponent(Message message,
+        MessageClickListener clickListener) {
+    // … 
+    addLayoutClickListener(
+            event -> clickListener.messageClick(this, message));
+}
+----
+
+- Fix the FolderView message population to include this new MessageClickListener. So instead of 
+`MessageComponent::new` call `this::createFromEntity`.
+
+[source, java]
+----
+private void refreshFolder(String folder) {
+    removeAllComponents();
+    messageFacade.getFolderMessages(folder).stream()
+            .map(this::createFromEntity).forEach(this::addComponent);
+}
+
+private MessageComponent createFromEntity(Message entity) {
+    MessageComponent msg = new MessageComponent(entity,
+            this::onMessageClicked);
+    return msg;
+}
+
+private void onMessageClicked(MessageComponent source, Message message) {
+}
+----
+
+.Now the FolderView consumes the click event and you can modify the message.
+- Set the message as read and save it through MessageFacade.
+- Update the message indicator
+
+[source, java]
+----
+private void onMessageClicked(MessageComponent source, Message message) {
+    if (!message.isRead()) {
+        message.setRead(true);
+        messageFacade.save(message);
+        source.setIndicator(true, message.getFlag());
+    }
+}
+----
+
+As an added bonus the message folder badge on the left side menu should update right away so fire a CDI event called 
+MessageModifiedEvent. MainLayout is already observing that message and waiting eagerly for some updates.
+To achieve this I just added @Observes annotated event listener to the MainLayout class.
+The event handler then calls MessageFacade and asks for a message count for each of the folders and
+maps the results to the menu buttons.
+Check it out from link:https://github.com/vaadin/designer-tutorials/blob/master/emailclient-tutorial-data/src/main/java/org/vaadin/example/ui/MainLayout.java[MainLayout.java] if you are interested.
+
+The event is already injected into FolderView so just call: +
+`messageSelectEvent.fire(new MessageModifiedEvent(message));`
+
+== What next?
+If you got this far and everything is working just the way you wanted, great job! We used DeltaSpike repositories
+and Java EE container features here, but these same principles can be applied to Spring Data, plain JPA
+or basically to any data source.
+
+I need to mention one important thing: If you were to use this same approach in any larger data set,
+you would have to implement data paging. Here we loaded all items to a layout, but you can imagine what
+happens to the server’s memory usage and the browser’s capability to display the items if the data set gets large.
+With DeltaSpike paging can be implemented easily using `QueryResult<E>`. After your data source implements paging,
+you only need to add UI controls for getting the next/previous page of data.
+
