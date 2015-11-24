@@ -257,7 +257,7 @@ The event handler then calls MessageFacade and asks for a message count for each
 maps the results to the menu buttons.
 Check it out from link:https://github.com/vaadin/designer-tutorials/blob/master/emailclient-tutorial-data/src/main/java/org/vaadin/example/ui/MainLayout.java[MainLayout.java] if you are interested.
 
-The event is already injected into FolderView so just call:+
+The event is already injected into FolderView so just call: +
 `messageSelectEvent.fire(new MessageModifiedEvent(message));`
 
 == What next?
