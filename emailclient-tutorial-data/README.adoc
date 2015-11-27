@@ -8,6 +8,7 @@ The repository is implemented using Apache link:https://deltaspike.apache.org/do
 
 image::https://raw.githubusercontent.com/vaadin/designer-tutorials/develop/emailclient-tutorial-data/tutorial-images/email-client-with-data.png[Screenshot]
 
+
 I assume you have installed link:https://vaadin.com/designer[Vaadin Designer] and you are using Eclipse. In this tutorial I used
 
 - Java 8 and Java EE 7 Web Specification APIs
@@ -19,10 +20,12 @@ I assume you have installed link:https://vaadin.com/designer[Vaadin Designer] an
 == For the impatient one
 If you just want to see the end result and the completed code and don’t feel like doing it yourself, you can get the end result from link:https://github.com/vaadin/designer-tutorials/tree/master/emailclient-tutorial-data[here]. However, I would recommend going through all the steps yourself.
 
-== Quick start
-The key point in this tutorial is to show you how to connect your designs to data, and as I want to keep this tutorial as short as possible, I’ve implemented the data part and the UI designs for you. Just fork or clone link:https://github.com/vaadin/designer-tutorials/tree/emailclient-tutorial-data-start/emailclient-tutorial-data[this] repository and you are almost good to go. 
+`git clone --depth 1 \https://github.com/vaadin/designer-tutorials.git`
 
-`git clone \https://github.com/vaadin/designer-tutorials.git`
+== Quick start
+The key point in this tutorial is to show you how to connect your designs to data, and as I want to keep this tutorial as short as possible, I’ve implemented the data part and the UI designs for you. Just fork or clone link:https://github.com/vaadin/designer-tutorials/tree/emailclient-tutorial-data-start/emailclient-tutorial-data[this] repository and you are almost good to go.
+
+`git clone --depth 1 --no-single-branch \https://github.com/vaadin/designer-tutorials.git --branch emailclient-tutorial-data-start`
 
 What you need, in addition to the code, is: *Eclipse (Luna or newer)*, *Vaadin Designer*, and *Java EE 7* compatible container (e.g. Wildfly 9). The project is a Maven project and has been created using `vaadin-archetype-application`. The project pom has all the necessary dependencies like `deltaspike-data-module-api`, `javaee-web-api`, etc. The project also uses a Vaadin CDI add-on to allow using our UI components as CDI managed beans and to easily inject the data source.
 
