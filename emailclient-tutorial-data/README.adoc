@@ -31,6 +31,8 @@ What you need, in addition to the code, is: *Eclipse (Luna or newer)*, *Vaadin D
 
 Import the project into Eclipse using `File > Import... > Existing Maven Projects`. Select the emailclient-tutorial-data directory as the root directory of your project.
 
+If you get stuck with the tutorial or you have some other questions, you can post them in this forum thread https://vaadin.com/forum#!/thread/11628010.
+
 == The backend
 *The backend is already done in the project, so you don’t have to do the following steps. This is here just for your information.*
 
