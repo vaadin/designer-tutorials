@@ -70,7 +70,7 @@ public class MainLayout extends MainLayoutDesign {
                     && button.getData() instanceof String) {
                 String folder = (String) button.getData();
                 Long count = badgeSuppliers.containsKey(folder)
-                        ? badgeSuppliers.get(folder).get() : 0;
+                        ? badgeSuppliers.get(folder).get() : 0L;
                 String badgeText = (count != null && count > 0)
                         ? (count > 99) ? "99+" : count.toString() : "";
                 String captionFormat = badgeText.isEmpty() ? ""
