@@ -12,9 +12,9 @@ image::https://raw.githubusercontent.com/vaadin/designer-tutorials/develop/email
 I assume you have installed link:https://vaadin.com/designer[Vaadin Designer] and you are using Eclipse. In this tutorial I used
 
 - Java 8 and Java EE 7 Web Specification APIs
-- Eclipse Mars R1
-- Vaadin 7.5.8
-- Designer 1.0.1
+- Eclipse Neon
+- Vaadin 7.7.3
+- Designer 1.1.0
 - Java EE 7 container e.g. Wildfly 9.
 
 == For the impatient one
