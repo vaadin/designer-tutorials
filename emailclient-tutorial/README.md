@@ -1,4 +1,4 @@
-`This tutorial is written using Java 8`
+`This tutorial is written using Java 8, Vaadin 7.7.3 and Designer 1.2`
 
 Building a comprehensive UI from scratch with Vaadin Designer
 ==================================
@@ -12,9 +12,9 @@ In the video they use a design from a site called www.100daysui.com where Paul F
 
 Start by creating a project
 ---------------------------
-Create a new Vaadin 7 project either by using the Vaadin Eclipse plugin or Maven. You should use version 7.5.7 or newer of Vaadin. If you are using Maven, just use vaadin-archetype-application.
+Create a new Vaadin 7 project either by using the Vaadin Eclipse plugin or Maven. You should use version 7.7.3 or newer of Vaadin. If you are using Maven, just use vaadin-archetype-application.
 ```
-mvn archetype:generate -DarchetypeGroupId=com.vaadin  -DarchetypeArtifactId=vaadin-archetype-application -DarchetypeVersion=7.5.8
+mvn archetype:generate -DarchetypeGroupId=com.vaadin  -DarchetypeArtifactId=vaadin-archetype-application -DarchetypeVersion=7.7.3
 ```
 Getting a head start
 --------------------
