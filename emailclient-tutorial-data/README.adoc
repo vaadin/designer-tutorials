@@ -16,7 +16,7 @@ I assume you have installed link:https://vaadin.com/designer[Vaadin Designer] an
 - Java 8 and Java EE 7 Web Specification APIs
 - Eclipse Neon
 - Vaadin 7.7.3
-- Designer 1.1.0
+- Designer 1.2.0
 - Java EE 7 container e.g. Wildfly 9.
 
 == For the impatient one
