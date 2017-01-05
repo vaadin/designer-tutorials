@@ -1,3 +1,5 @@
+`This tutorial is written using Java 8, Vaadin 7.7.3 and Designer 1.2`
+
 = Connecting your designs to data
 
 In the following tutorial I’ll show you how you can connect your Vaadin Designer based views to a real database backend
